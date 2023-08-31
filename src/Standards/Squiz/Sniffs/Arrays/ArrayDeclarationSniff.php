@@ -775,11 +775,17 @@ class ArrayDeclarationSniff implements Sniff
             }
 
             if ($tokens[$indexPointer]['column'] !== $indicesStart && ($indexPointer - 1) !== $arrayStart) {
-                $expected = ($indicesStart - 1);
-                $found    = ($tokens[$indexPointer]['column'] - 1);
-                $error    = 'Array key not aligned correctly; expected %s spaces but found %s';
-                $data     = [
+                $expected       = ($indicesStart - 1);
+                $found          = ($tokens[$indexPointer]['column'] - 1);
+                $pluralizeSpace = 's';
+                if ($expected === 1) {
+                    $pluralizeSpace = '';
+                }
+
+                $error = 'Array key not aligned correctly; expected %s space%s but found %s';
+                $data  = [
                     $expected,
+                    $pluralizeSpace,
                     $found,
                 ];
 
@@ -791,7 +797,7 @@ class ArrayDeclarationSniff implements Sniff
                         $phpcsFile->fixer->replaceToken(($indexPointer - 1), str_repeat(' ', $expected));
                     }
                 }
-            }
+            }//end if
 
             $arrowStart = ($tokens[$indexPointer]['column'] + $maxLength + 1);
             if ($tokens[$index['arrow']]['column'] !== $arrowStart) {

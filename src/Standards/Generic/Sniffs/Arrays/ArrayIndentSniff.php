@@ -76,9 +76,15 @@ class ArrayIndentSniff extends AbstractArraySniff
         // check indent levels because it's not valid. But we don't enforce exactly
         // how far indented it should be.
         if ($startIndent < $baseIndent) {
-            $error = 'Array open brace not indented correctly; expected at least %s spaces but found %s';
+            $pluralizeSpace = 's';
+            if ($baseIndent === 1) {
+                $pluralizeSpace = '';
+            }
+
+            $error = 'Array open brace not indented correctly; expected at least %s space%s but found %s';
             $data  = [
                 $baseIndent,
+                $pluralizeSpace,
                 $startIndent,
             ];
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'OpenBraceIncorrect', $data);
@@ -117,9 +123,15 @@ class ArrayIndentSniff extends AbstractArraySniff
                 continue;
             }
 
-            $error = 'Array key not indented correctly; expected %s spaces but found %s';
+            $pluralizeSpace = 's';
+            if ($expectedIndent === 1) {
+                $pluralizeSpace = '';
+            }
+
+            $error = 'Array key not indented correctly; expected %s space%s but found %s';
             $data  = [
                 $expectedIndent,
+                $pluralizeSpace,
                 $foundIndent,
             ];
             $fix   = $phpcsFile->addFixableError($error, $first, 'KeyIncorrect', $data);
