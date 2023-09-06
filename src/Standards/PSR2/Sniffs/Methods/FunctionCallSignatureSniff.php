@@ -25,7 +25,7 @@ class FunctionCallSignatureSniff extends PEARFunctionCallSignatureSniff
 
 
     /**
-     * Processes single-line calls.
+     * Determine if this is a multi-line function call.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being scanned.
      * @param int                         $stackPtr    The position of the current token
@@ -35,7 +35,7 @@ class FunctionCallSignatureSniff extends PEARFunctionCallSignatureSniff
      * @param array                       $tokens      The stack of tokens that make up
      *                                                 the file.
      *
-     * @return void
+     * @return bool
      */
     public function isMultiLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {
@@ -74,6 +74,28 @@ class FunctionCallSignatureSniff extends PEARFunctionCallSignatureSniff
         return false;
 
     }//end isMultiLineCall()
+
+
+    /**
+     * No-op; this rule does not apply to PSR-2.
+     *
+     * @param File  $phpcsFile           The file being scanned.
+     * @param int   $first               Pointer to the first empty token on this line.
+     * @param array $tokens              The stack of tokens that make up the file.
+     * @param int   $functionIndent      The expected indent for this function definition.
+     * @param int   $foundFunctionIndent The actual indent for this function definition.
+     *
+     * @return void
+     */
+    protected function complainOpenStatementWrongIndent(
+        $phpcsFile,
+        $first,
+        $tokens,
+        $functionIndent,
+        $foundFunctionIndent
+    ) {
+
+    }//end complainOpenStatementWrongIndent()
 
 
 }//end class

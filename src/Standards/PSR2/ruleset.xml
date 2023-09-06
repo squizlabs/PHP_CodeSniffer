@@ -151,9 +151,6 @@
     <rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
         <severity>0</severity>
     </rule>
-    <rule ref="PSR2.Methods.FunctionCallSignature.OpeningIndent">
-        <severity>0</severity>
-    </rule>
 
     <!-- 5. Control Structures -->
 

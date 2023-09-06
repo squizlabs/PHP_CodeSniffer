@@ -26,3 +26,18 @@ if ($foo) {
 $this->foo()
     ->bar()
     ->baz();
+
+// https://github.com/squizlabs/PHP_CodeSniffer/issues/2078#issuecomment-401641650
+// See also PSR2.Methods.FunctionCallSignature
+$repository->foo()
+           ->bar(
+                function () {
+                    return true;
+                }
+           );
+$repository->foo()
+           ->bar(
+                function () {
+                    return true;
+                }
+           );

@@ -281,3 +281,18 @@ array_fill_keys(
     ), value: true,
 );
 // phpcs:set PSR2.Methods.FunctionCallSignature allowMultipleArguments false
+
+// https://github.com/squizlabs/PHP_CodeSniffer/issues/2078#issuecomment-401641650
+// This sniff should accept both of these styles. Generic.WhiteSpace.ScopeIndent can complain & fix this if enabled.
+$repository->foo()
+           ->bar(
+                function () {
+                    return true;
+                }
+           );
+$repository->foo()
+           ->bar(
+               function () {
+                   return true;
+               }
+           );
