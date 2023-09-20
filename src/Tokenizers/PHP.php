@@ -3049,14 +3049,16 @@ class PHP extends Tokenizer
                 || $this->tokens[$i]['code'] === T_FALSE
                 || $this->tokens[$i]['code'] === T_NULL
             ) {
-                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
                         // Non-whitespace content.
                         break;
                     }
                 }
 
-                if (isset($this->tstringContexts[$this->tokens[$x]['code']]) === true) {
+                if ($x !== $numTokens
+                    && isset($this->tstringContexts[$this->tokens[$x]['code']]) === true
+                ) {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $line = $this->tokens[$i]['line'];
                         $type = $this->tokens[$i]['type'];
