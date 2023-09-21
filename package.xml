@@ -271,6 +271,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
+     <file baseinstalldir="" name="IgnoreListTest.php" role="test" />
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
     </dir>
     <dir name="Standards">
@@ -2115,6 +2116,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dir name="Util">
      <file baseinstalldir="PHP/CodeSniffer" name="Cache.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Common.php" role="php" />
+     <file baseinstalldir="PHP/CodeSniffer" name="IgnoreList.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Standards.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Timing.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Tokens.php" role="php" />
@@ -2165,6 +2167,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
+   <install as="CodeSniffer/Core/IgnoreListTest.php" name="tests/Core/IgnoreListTest.php" />
    <install as="CodeSniffer/Core/Autoloader/DetermineLoadedClassTest.php" name="tests/Core/Autoloader/DetermineLoadedClassTest.php" />
    <install as="CodeSniffer/Core/Autoloader/TestFiles/A.inc" name="tests/Core/Autoloader/TestFiles/A.inc" />
    <install as="CodeSniffer/Core/Autoloader/TestFiles/B.inc" name="tests/Core/Autoloader/TestFiles/B.inc" />
@@ -2289,6 +2292,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
+   <install as="CodeSniffer/Core/IgnoreListTest.php" name="tests/Core/IgnoreListTest.php" />
    <install as="CodeSniffer/Core/Autoloader/DetermineLoadedClassTest.php" name="tests/Core/Autoloader/DetermineLoadedClassTest.php" />
    <install as="CodeSniffer/Core/Autoloader/TestFiles/A.inc" name="tests/Core/Autoloader/TestFiles/A.inc" />
    <install as="CodeSniffer/Core/Autoloader/TestFiles/B.inc" name="tests/Core/Autoloader/TestFiles/B.inc" />

@@ -1046,6 +1046,70 @@ EOD;
                 'expectedErrors'   => 1,
                 'expectedWarnings' => 2,
             ],
+            'disable: two sniffs; enable: both sniffs; ignore: one of those sniffs (#3889)'                                 => [
+                'code'             => '
+                    // phpcs:disable Generic.PHP.LowerCaseConstant
+                    // phpcs:disable Generic.Commenting.Todo
+                    //TODO: write some code
+                    $var = TRUE;
+                    // phpcs:enable Generic.Commenting.Todo
+                    // phpcs:enable Generic.PHP.LowerCaseConstant
+
+                    $var = FALSE; // phpcs:ignore Generic.PHP.LowerCaseConstant
+                    ',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 0,
+            ],
+            'disable: two sniffs; enable: one sniff; ignore: enabled sniff'                                                 => [
+                'code'             => '
+                    // phpcs:disable Generic.PHP.LowerCaseConstant
+                    // phpcs:disable Generic.Commenting.Todo
+                    //TODO: write some code
+                    $var = TRUE;
+                    // phpcs:enable Generic.PHP.LowerCaseConstant
+
+                    $var = FALSE; // phpcs:ignore Generic.PHP.LowerCaseConstant
+                    ',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 0,
+            ],
+            'disable: two sniffs; enable: one sniff; ignore: category'                                                      => [
+                'code'             => '
+                    // phpcs:disable Generic.PHP.LowerCaseConstant
+                    // phpcs:disable Generic.Commenting.Todo
+                    //TODO: write some code
+                    $var = TRUE;
+                    // phpcs:enable Generic.PHP.LowerCaseConstant
+
+                    $var = FALSE; // phpcs:ignore Generic.PHP
+                    ',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 0,
+            ],
+            'disable: two sniffs; enable: category; ignore: sniff in category'                                              => [
+                'code'             => '
+                    // phpcs:disable Generic.PHP.LowerCaseConstant
+                    // phpcs:disable Generic.Commenting.Todo
+                    //TODO: write some code
+                    $var = TRUE;
+                    // phpcs:enable Generic.PHP
+
+                    $var = FALSE; // phpcs:ignore Generic.PHP.LowerCaseConstant
+                    ',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 0,
+            ],
+            'disable: standard; enable: category in standard; disable: sniff in category'                                   => [
+                'code'             => '
+                    // phpcs:disable Generic
+                    // phpcs:enable Generic.PHP
+                    // phpcs:disable Generic.PHP.LowerCaseConstant
+                    //TODO: write some code
+                    $var = TRUE;
+                    ',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 0,
+            ],
         ];
 
     }//end dataEnableSelected()
