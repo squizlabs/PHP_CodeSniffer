@@ -249,4 +249,14 @@
  * @link		http://pear.php.net/package/PHP_CodeSniffer
  */
 
+/**
+ * Do something.
+ *
+ * @codeCoverageIgnore
+ *
+ * @phpcs:disable Stnd.Cat.SniffName
+ *
+ * @return void
+ */
+
 /** No docblock close tag. Must be last test without new line.

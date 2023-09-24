@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class DocCommentSniff implements Sniff
 {
@@ -280,9 +281,12 @@ class DocCommentSniff implements Sniff
             }
 
             // Check that there was single blank line after the tag block
-            // but account for a multi-line tag comments.
+            // but account for multi-line tag comments.
+            $find = Tokens::$phpcsCommentTokens;
+            $find[T_DOC_COMMENT_TAG] = T_DOC_COMMENT_TAG;
+
             $lastTag = $group[$pos];
-            $next    = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($lastTag + 3), $commentEnd);
+            $next    = $phpcsFile->findNext($find, ($lastTag + 3), $commentEnd);
             if ($next !== false) {
                 $prev = $phpcsFile->findPrevious([T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING], ($next - 1), $commentStart);
                 if ($tokens[$next]['line'] !== ($tokens[$prev]['line'] + 2)) {
