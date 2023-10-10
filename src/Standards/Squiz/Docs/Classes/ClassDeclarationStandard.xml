@@ -1,0 +1,23 @@
+<documentation title="Class Declaration">
+    <standard>
+    <![CDATA[
+    This extends the PSR2 standard, adding to the requirements for the 'SpaceBeforeKeyword' code.  It ensures that keywords like 'class' do not have a space before them.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Class Declaration.">
+        <![CDATA[
+class<em> </em>Foo
+{
+}
+]]>
+        </code>
+        <code title="Invalid: Class Declaration.">
+        <![CDATA[
+class<em>  </em>Foo
+{
+}
+]]>
+        </code>
+    </code_comparison>
+</documentation>
