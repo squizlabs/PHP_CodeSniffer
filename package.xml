@@ -1519,6 +1519,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayDeclarationStandard.xml" role="php" />
        </dir>
        <dir name="Classes">
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceStandard.xml" role="php" />
        </dir>
