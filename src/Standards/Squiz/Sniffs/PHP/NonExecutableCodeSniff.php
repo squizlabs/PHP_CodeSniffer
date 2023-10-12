@@ -122,7 +122,9 @@ class NonExecutableCodeSniff implements Sniff
                     // then this return statement doesn't return anything
                     // and is not required anyway.
                     $owner = $tokens[$next]['scope_condition'];
-                    if ($tokens[$owner]['code'] === T_FUNCTION) {
+                    if ($tokens[$owner]['code'] === T_FUNCTION
+                        || $tokens[$owner]['code'] === T_CLOSURE
+                    ) {
                         $warning = 'Empty return statement not required here';
                         $phpcsFile->addWarning($warning, $stackPtr, 'ReturnNotRequired');
                         return;

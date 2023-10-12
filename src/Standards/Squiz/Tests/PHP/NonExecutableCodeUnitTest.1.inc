@@ -413,5 +413,11 @@ function returnNotRequiredIgnoreCommentsB()
     /*comment*/
 }
 
+$closure = function ()
+{
+    echo 'foo';
+    return; // This return should be flagged as not required.
+};
+
 // Intentional syntax error.
 return array_map(
