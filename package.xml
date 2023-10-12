@@ -80,6 +80,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3728 : PHP 8.2 | PSR1/SideEffects: allow for readonly classes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3770 : Squiz/NonExecutableCode: prevent false positives for switching between PHP and HTML
+    -- Thanks to Dan Wallis (@fredden) for the patch
   - Fixed bug #3776 : Generic/JSHint: error when JSHint is not available
     -- Thanks to Dan Wallis (@fredden) for the patch
   - Fixed bug #3777 : Squiz/NonExecutableCode: slew of bug fixes, mostly related to modern PHP
