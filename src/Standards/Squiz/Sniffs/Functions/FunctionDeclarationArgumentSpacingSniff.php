@@ -37,6 +37,13 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
      */
     public $requiredSpacesBeforeClose = 0;
 
+    /**
+     * How many spaces should follow the reference operator in by-reference parameter declarations.
+     *
+     * @var integer
+     */
+    public $requiredSpacesAfterReferenceOperator = 0;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -77,7 +84,8 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
 
         $this->equalsSpacing           = (int) $this->equalsSpacing;
         $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
-        $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
+        $this->requiredSpacesBeforeClose            = (int) $this->requiredSpacesBeforeClose;
+        $this->requiredSpacesAfterReferenceOperator = (int) $this->requiredSpacesAfterReferenceOperator;
 
         $this->processBracket($phpcsFile, $tokens[$stackPtr]['parenthesis_opener']);
 
@@ -148,15 +156,21 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                     $gap = $tokens[($refToken + 1)]['length'];
                 }
 
-                if ($gap !== 0) {
-                    $error = 'Expected 0 spaces after reference operator for argument "%s"; %s found';
+                if ($gap !== $this->requiredSpacesAfterReferenceOperator) {
+                    $error = 'Expected %s spaces after reference operator for argument "%s"; %s found';
                     $data  = [
+                        $this->requiredSpacesAfterReferenceOperator,
                         $param['name'],
                         $gap,
                     ];
                     $fix   = $phpcsFile->addFixableError($error, $refToken, 'SpacingAfterReference', $data);
                     if ($fix === true) {
-                        $phpcsFile->fixer->replaceToken(($refToken + 1), '');
+                        $padding = str_repeat(' ', $this->requiredSpacesAfterReferenceOperator);
+                        if ($gap === 0) {
+                            $phpcsFile->fixer->addContentBefore(($refToken + 1), $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($refToken + 1), $padding);
+                        }
                     }
                 }
             }//end if
