@@ -1,10 +1,22 @@
 <?php
 /**
- * Detects mixed '&&' and '||' within a single expression, without making
- * precedence explicit using parentheses.
+ * Forbid mixing different binary boolean operators within a single expression without making precedence
+ * clear using parentheses.
  *
  * <code>
- * $var = true && true || true;
+ * $one = false;
+ * $two = false;
+ * $three = true;
+ *
+ * $result = $one && $two || $three;
+ *
+ * $result3 = $one && !$two xor $three;
+ *
+ *
+ * if (
+ *     $result && !$result3
+ *     || !$result && $result3
+ * ) {}
  * </code>
  *
  * @author    Tim Duesterhus <duesterhus@woltlab.com>
@@ -16,22 +28,34 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class MixedBooleanOperatorSniff implements Sniff
 {
 
+    /**
+     * Array of tokens this test searches for to find either a boolean
+     * operator or the start of the current (sub-)expression. Used for
+     * performance optimization purposes.
+     *
+     * @var array<int|string>
+     */
+    private $searchTargets = [];
+
 
     /**
-     * Registers the tokens that this sniff wants to listen for.
+     * Returns an array of tokens this test wants to listen for.
      *
-     * @return int[]
+     * @return array<int|string>
      */
     public function register()
     {
-        return [
-            T_BOOLEAN_OR,
-            T_BOOLEAN_AND,
-        ];
+        $this->searchTargets  = Tokens::$booleanOperators;
+        $this->searchTargets += Tokens::$blockOpeners;
+        $this->searchTargets[\T_INLINE_THEN] = \T_INLINE_THEN;
+        $this->searchTargets[\T_INLINE_ELSE] = \T_INLINE_ELSE;
+
+        return Tokens::$booleanOperators;
 
     }//end register()
 
@@ -48,55 +72,43 @@ class MixedBooleanOperatorSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $token  = $tokens[$stackPtr];
 
         $start = $phpcsFile->findStartOfStatement($stackPtr);
 
-        if ($token['code'] === T_BOOLEAN_AND) {
-            $search = T_BOOLEAN_OR;
-        } else if ($token['code'] === T_BOOLEAN_OR) {
-            $search = T_BOOLEAN_AND;
-        } else {
-            throw new \LogicException('Unreachable');
+        $previous = $phpcsFile->findPrevious(
+            $this->searchTargets,
+            ($stackPtr - 1),
+            $start,
+            false,
+            null,
+            true
+        );
+
+        if ($previous === false) {
+            // No token found.
+            return;
         }
 
-        while (true) {
-            $previous = $phpcsFile->findPrevious(
-                [
-                    $search,
-                    T_OPEN_PARENTHESIS,
-                    T_OPEN_SQUARE_BRACKET,
-                    T_CLOSE_PARENTHESIS,
-                    T_CLOSE_SQUARE_BRACKET,
-                ],
-                $stackPtr,
-                $start
-            );
+        if ($tokens[$previous]['code'] === $tokens[$stackPtr]['code']) {
+            // Identical operator found.
+            return;
+        }
 
-            if ($previous === false) {
-                break;
-            }
+        if (\in_array($tokens[$previous]['code'], [\T_INLINE_THEN, \T_INLINE_ELSE], true) === true) {
+            // Beginning of the expression found for the ternary conditional operator.
+            return;
+        }
 
-            if ($tokens[$previous]['code'] === T_OPEN_PARENTHESIS
-                || $tokens[$previous]['code'] === T_OPEN_SQUARE_BRACKET
-            ) {
-                // We halt if we reach the opening parens / bracket of the boolean operator.
-                return;
-            } else if ($tokens[$previous]['code'] === T_CLOSE_PARENTHESIS) {
-                // We skip the content of nested parens.
-                $stackPtr = ($tokens[$previous]['parenthesis_opener'] - 1);
-            } else if ($tokens[$previous]['code'] === T_CLOSE_SQUARE_BRACKET) {
-                // We skip the content of nested brackets.
-                $stackPtr = ($tokens[$previous]['bracket_opener'] - 1);
-            } else if ($tokens[$previous]['code'] === $search) {
-                // We reached a mismatching operator, thus we must report the error.
-                $error = "Mixed '&&' and '||' within an expression without using parentheses.";
-                $phpcsFile->addError($error, $stackPtr, 'MissingParentheses', []);
-                return;
-            } else {
-                throw new \LogicException('Unreachable');
-            }
-        }//end while
+        if (isset(Tokens::$blockOpeners[$tokens[$previous]['code']]) === true) {
+            // Beginning of the expression found for a block opener. Needed to
+            // correctly handle match arms.
+            return;
+        }
+
+        // We found a mismatching operator, thus we must report the error.
+        $error  = 'Mixing different binary boolean operators within an expression';
+        $error .= ' without using parentheses to clarify precedence is not allowed.';
+        $phpcsFile->addError($error, $stackPtr, 'MissingParentheses');
 
     }//end process()
 
