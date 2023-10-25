@@ -95,6 +95,8 @@ class FunctionSpacingUnitTest extends AbstractSniffUnitTest
                 553 => 1,
                 560 => 1,
                 566 => 1,
+                580 => 2,
+                583 => 3,
             ];
 
         case 'FunctionSpacingUnitTest.2.inc':

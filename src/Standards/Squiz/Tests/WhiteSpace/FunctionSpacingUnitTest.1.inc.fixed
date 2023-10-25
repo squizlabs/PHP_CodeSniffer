@@ -656,3 +656,18 @@ class ClassWithAttributes {
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 2
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 2
+
+// Issue #3904.
+echo 'this line belongs with the #3904 test';
+
+
+class Person {public function __construct($name){}}
+
+
+echo 'this line belongs with the #3904 test';
+
+
+function Foo() {} function bar($name){}
+
+
+echo 'this line belongs with the #3904 test';

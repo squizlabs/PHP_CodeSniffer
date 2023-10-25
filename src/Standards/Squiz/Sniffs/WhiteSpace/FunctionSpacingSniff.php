@@ -262,21 +262,20 @@ class FunctionSpacingSniff implements Sniff
                 $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($tokens[$prevContent]['comment_opener'] - 1), null, true);
             }
 
-            $prevLineToken = $prevContent;
-
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after
             // the previous function and no blank lines before this one as well.
-            $prevLine   = ($tokens[$prevContent]['line'] - 1);
-            $i          = ($stackPtr - 1);
-            $foundLines = 0;
-
             $stopAt = 0;
-            if (isset($tokens[$stackPtr]['conditions']) === true) {
-                $conditions = $tokens[$stackPtr]['conditions'];
+            if (isset($tokens[$prevLineToken]['conditions']) === true) {
+                $conditions = $tokens[$prevLineToken]['conditions'];
                 $conditions = array_keys($conditions);
                 $stopAt     = array_pop($conditions);
             }
+
+            $prevLineToken = $prevContent;
+            $prevLine      = ($tokens[$prevContent]['line'] - 1);
+            $i          = ($stackPtr - 1);
+            $foundLines = 0;
 
             while ($currentLine !== $prevLine && $currentLine > 1 && $i > $stopAt) {
                 if ($tokens[$i]['code'] === T_FUNCTION) {
