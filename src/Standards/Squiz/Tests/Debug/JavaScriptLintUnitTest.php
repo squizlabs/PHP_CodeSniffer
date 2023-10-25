@@ -19,7 +19,7 @@ class JavaScriptLintUnitTest extends AbstractSniffUnitTest
     /**
      * Should this test be skipped for some reason.
      *
-     * @return void
+     * @return bool
      */
     protected function shouldSkipTest()
     {

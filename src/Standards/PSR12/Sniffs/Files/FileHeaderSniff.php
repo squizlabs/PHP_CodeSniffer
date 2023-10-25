@@ -284,7 +284,7 @@ class FileHeaderSniff implements Sniff
      * @param array                       $headerLines Header information, as sourced
      *                                                 from getHeaderLines().
      *
-     * @return int|null
+     * @return void
      */
     public function processHeaderLines(File $phpcsFile, $headerLines)
     {
