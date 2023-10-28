@@ -80,7 +80,7 @@ class ScopeIndentSniff implements Sniff
      * This is a cached copy of the public version of this var, which
      * can be set in a ruleset file, and some core ignored tokens.
      *
-     * @var int[]
+     * @var array<int|string, bool>
      */
     private $ignoreIndentation = [];
 

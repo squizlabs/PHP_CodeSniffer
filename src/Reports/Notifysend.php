@@ -154,7 +154,7 @@ class Notifysend implements Report
      * @param int      $totalErrors   Total number of errors found during the run.
      * @param int      $totalWarnings Total number of warnings found during the run.
      *
-     * @return string Error message or NULL if no error/warning found.
+     * @return string|null Error message or NULL if no error/warning found.
      */
     protected function generateMessage($checkedFiles, $totalErrors, $totalWarnings)
     {

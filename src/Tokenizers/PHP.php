@@ -306,7 +306,7 @@ class PHP extends Tokenizer
     /**
      * Known lengths of tokens.
      *
-     * @var array<int, int>
+     * @var array<string|int, int>
      */
     public $knownLengths = [
         T_ABSTRACT                 => 8,

@@ -18,7 +18,7 @@ class DisallowMultipleStyleDefinitionsSniff implements Sniff
     /**
      * A list of tokenizers this sniff supports.
      *
-     * @var array
+     * @var string[]
      */
     public $supportedTokenizers = ['CSS'];
 
@@ -26,7 +26,7 @@ class DisallowMultipleStyleDefinitionsSniff implements Sniff
     /**
      * Returns the token types that this sniff is interested in.
      *
-     * @return int[]
+     * @return array<int|string>
      */
     public function register()
     {

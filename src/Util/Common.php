@@ -35,7 +35,7 @@ class Common
      *
      * @param string $path The path to use.
      *
-     * @return mixed
+     * @return bool
      */
     public static function isPharFile($path)
     {
@@ -83,7 +83,7 @@ class Common
      *
      * @param string $path The path to use.
      *
-     * @return mixed
+     * @return string|false
      */
     public static function realpath($path)
     {

@@ -27,7 +27,7 @@ use PHP_CodeSniffer\Util\Common;
  *                                     2: ruleset and file parsing output
  *                                     3: sniff execution output
  * @property bool     $interactive     Enable interactive checking mode.
- * @property bool     $parallel        Check files in parallel.
+ * @property int      $parallel        Check files in parallel.
  * @property bool     $cache           Enable the use of the file cache.
  * @property bool     $cacheFile       A file where the cache data should be written
  * @property bool     $colors          Display colours in output.

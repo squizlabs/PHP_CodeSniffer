@@ -19,7 +19,7 @@ class Cache
     /**
      * The filesystem location of the cache file.
      *
-     * @var void
+     * @var string
      */
     private static $path = '';
 

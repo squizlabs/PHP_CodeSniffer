@@ -36,7 +36,7 @@ class FileHeaderSniff implements Sniff
      * @param int                         $stackPtr  The position of the current
      *                                               token in the stack.
      *
-     * @return int|null
+     * @return int|void
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -284,7 +284,7 @@ class FileHeaderSniff implements Sniff
      * @param array                       $headerLines Header information, as sourced
      *                                                 from getHeaderLines().
      *
-     * @return int|null
+     * @return void
      */
     public function processHeaderLines(File $phpcsFile, $headerLines)
     {

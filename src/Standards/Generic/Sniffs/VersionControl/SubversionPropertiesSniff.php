@@ -50,7 +50,7 @@ class SubversionPropertiesSniff implements Sniff
      * @param int                         $stackPtr  The position of the current token
      *                                               in the stack passed in $tokens.
      *
-     * @return void
+     * @return int
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -113,7 +113,7 @@ class SubversionPropertiesSniff implements Sniff
      *
      * @param string $path The path to return Subversion properties on.
      *
-     * @return array
+     * @return array|null
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If Subversion properties file could
      *                                                      not be opened.
      */

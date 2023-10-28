@@ -88,7 +88,7 @@ class FileCommentSniff implements Sniff
      * @param int                         $stackPtr  The position of the current token
      *                                               in the stack passed in $tokens.
      *
-     * @return int
+     * @return int|void
      */
     public function process(File $phpcsFile, $stackPtr)
     {

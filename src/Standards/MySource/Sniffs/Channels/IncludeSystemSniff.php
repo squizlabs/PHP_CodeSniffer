@@ -19,7 +19,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
     /**
      * A list of classes that don't need to be included.
      *
-     * @var string[]
+     * @var array<string, bool>
      */
     private $ignore = [
         'self'                      => true,
@@ -286,7 +286,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
      * @param int                         $stackPtr  The position in the tokens array of the
      *                                               potentially included class.
      *
-     * @return string
+     * @return string|false
      */
     protected function getIncludedClassFromToken(File $phpcsFile, array $tokens, $stackPtr)
     {

@@ -28,7 +28,7 @@ class Hgblame extends VersionControl
      *
      * @param string $line Line to parse.
      *
-     * @return mixed string or false if impossible to recover.
+     * @return string|false String or FALSE if impossible to recover.
      */
     protected function getAuthor($line)
     {

@@ -199,7 +199,7 @@ class FileList implements \Iterator, \Countable
     /**
      * Return the file path of the current file being processed.
      *
-     * @return void
+     * @return string|null Path name or `null` when the end of the iterator has been reached.
      */
     #[ReturnTypeWillChange]
     public function key()

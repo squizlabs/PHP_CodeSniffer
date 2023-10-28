@@ -100,8 +100,8 @@ class JumbledIncrementerSniff implements Sniff
     /**
      * Get all used variables in the incrementer part of a for statement.
      *
-     * @param array(integer=>array) $tokens Array with all code sniffer tokens.
-     * @param array(string=>mixed)  $token  Current for loop token
+     * @param array<int, array>    $tokens Array with all code sniffer tokens.
+     * @param array<string, mixed> $token  Current for loop token
      *
      * @return string[] List of all found incrementer variables.
      */

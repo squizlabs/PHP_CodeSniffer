@@ -22,14 +22,14 @@ class ClosureLinterSniff implements Sniff
      *
      * All other error codes will show warnings.
      *
-     * @var integer
+     * @var array
      */
     public $errorCodes = [];
 
     /**
      * A list of error codes to ignore.
      *
-     * @var integer
+     * @var array
      */
     public $ignoreCodes = [];
 

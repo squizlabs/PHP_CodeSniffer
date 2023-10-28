@@ -70,7 +70,7 @@ class Fixer
      * If a token is being "fixed" back to its last value, the fix is
      * probably conflicting with another.
      *
-     * @var array<int, string>
+     * @var array<int, array<string, mixed>>
      */
     private $oldTokenValues = [];
 
@@ -349,7 +349,7 @@ class Fixer
     /**
      * Start recording actions for a changeset.
      *
-     * @return void
+     * @return void|false
      */
     public function beginChangeset()
     {
