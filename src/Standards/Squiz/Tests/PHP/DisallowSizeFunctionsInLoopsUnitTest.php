@@ -43,13 +43,12 @@ class DisallowSizeFunctionsInLoopsUnitTest extends AbstractSniffUnitTest
                 44 => 1,
                 46 => 1,
             ];
-            break;
+
         case 'DisallowSizeFunctionsInLoopsUnitTest.js':
             return [1 => 1];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

@@ -44,26 +44,26 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                 65 => 1,
                 73 => 1,
             ];
-            break;
+
         case 'SuperfluousWhitespaceUnitTest.2.inc':
             return [
                 2 => 1,
                 8 => 1,
             ];
-            break;
+
         case 'SuperfluousWhitespaceUnitTest.3.inc':
             return [
                 6  => 1,
                 10 => 1,
             ];
-            break;
+
         case 'SuperfluousWhitespaceUnitTest.4.inc':
         case 'SuperfluousWhitespaceUnitTest.5.inc':
             return [
                 1 => 1,
                 4 => 1,
             ];
-            break;
+
         case 'SuperfluousWhitespaceUnitTest.1.js':
             return [
                 1  => 1,
@@ -77,7 +77,7 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                 38 => 1,
                 56 => 1,
             ];
-            break;
+
         case 'SuperfluousWhitespaceUnitTest.1.css':
             return [
                 1  => 1,
@@ -86,10 +86,9 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                 11 => 1,
                 32 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

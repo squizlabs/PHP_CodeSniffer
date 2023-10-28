@@ -50,7 +50,7 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
                 12 => 1,
                 13 => 1,
             ];
-            break;
+
         case 'DuplicateClassNameUnitTest.2.inc':
             return [
                 2 => 1,
@@ -58,19 +58,18 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
                 4 => 1,
                 5 => 1,
             ];
-            break;
+
         case 'DuplicateClassNameUnitTest.5.inc':
             return [
                 3 => 1,
                 7 => 1,
             ];
-            break;
+
         case 'DuplicateClassNameUnitTest.6.inc':
             return [10 => 1];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getWarningList()

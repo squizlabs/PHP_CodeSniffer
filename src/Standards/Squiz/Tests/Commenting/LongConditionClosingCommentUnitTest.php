@@ -60,7 +60,7 @@ class LongConditionClosingCommentUnitTest extends AbstractSniffUnitTest
                 1008 => 1,
                 1032 => 1,
             ];
-            break;
+
         case 'LongConditionClosingCommentUnitTest.js':
             return [
                 47  => 1,
@@ -76,10 +76,9 @@ class LongConditionClosingCommentUnitTest extends AbstractSniffUnitTest
                 439 => 1,
                 444 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

@@ -43,7 +43,7 @@ class SemicolonSpacingUnitTest extends AbstractSniffUnitTest
                 30 => 2,
                 36 => 1,
             ];
-            break;
+
         case 'SemicolonSpacingUnitTest.js':
             return [
                 3  => 1,
@@ -56,10 +56,9 @@ class SemicolonSpacingUnitTest extends AbstractSniffUnitTest
                 22 => 1,
                 25 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

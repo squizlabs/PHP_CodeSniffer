@@ -122,7 +122,7 @@ class MultipleStatementAlignmentUnitTest extends AbstractSniffUnitTest
                 499 => 1,
                 500 => 1,
             ];
-        break;
+
         case 'MultipleStatementAlignmentUnitTest.js':
             return [
                 11  => 1,
@@ -154,10 +154,9 @@ class MultipleStatementAlignmentUnitTest extends AbstractSniffUnitTest
                 114 => 1,
                 117 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getWarningList()

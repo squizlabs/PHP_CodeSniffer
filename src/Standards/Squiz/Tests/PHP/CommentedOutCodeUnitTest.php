@@ -58,16 +58,15 @@ class CommentedOutCodeUnitTest extends AbstractSniffUnitTest
                 147 => 1,
                 158 => 1,
             ];
-            break;
+
         case 'CommentedOutCodeUnitTest.css':
             return [
                 7  => 1,
                 16 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getWarningList()

@@ -52,7 +52,7 @@ class LowerCaseConstantUnitTest extends AbstractSniffUnitTest
                 95  => 1,
                 100 => 2,
             ];
-        break;
+
         case 'LowerCaseConstantUnitTest.js':
             return [
                 2  => 1,
@@ -64,10 +64,9 @@ class LowerCaseConstantUnitTest extends AbstractSniffUnitTest
                 13 => 1,
                 14 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

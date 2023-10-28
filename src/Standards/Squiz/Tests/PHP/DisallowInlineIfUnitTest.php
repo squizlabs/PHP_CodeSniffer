@@ -33,13 +33,12 @@ class DisallowInlineIfUnitTest extends AbstractSniffUnitTest
                 8  => 1,
                 18 => 1,
             ];
-            break;
+
         case 'DisallowInlineIfUnitTest.js':
             return [1 => 1];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

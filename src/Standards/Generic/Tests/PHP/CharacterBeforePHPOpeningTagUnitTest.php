@@ -30,10 +30,9 @@ class CharacterBeforePHPOpeningTagUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'CharacterBeforePHPOpeningTagUnitTest.1.inc':
             return [2 => 1];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

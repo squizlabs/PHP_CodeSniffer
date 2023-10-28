@@ -37,7 +37,7 @@ class FunctionClosingBraceSpaceUnitTest extends AbstractSniffUnitTest
                 31 => 1,
                 39 => 1,
             ];
-            break;
+
         case 'FunctionClosingBraceSpaceUnitTest.js':
             return [
                 13  => 1,
@@ -49,10 +49,9 @@ class FunctionClosingBraceSpaceUnitTest extends AbstractSniffUnitTest
                 84  => 1,
                 128 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

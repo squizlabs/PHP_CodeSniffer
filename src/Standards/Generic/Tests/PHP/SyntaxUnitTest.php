@@ -32,10 +32,9 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
         case 'SyntaxUnitTest.1.inc':
         case 'SyntaxUnitTest.2.inc':
             return [3 => 1];
-            break;
+
         default:
             return [];
-            break;
         }
 
     }//end getErrorList()

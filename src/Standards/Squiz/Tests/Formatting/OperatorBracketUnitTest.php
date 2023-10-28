@@ -73,7 +73,7 @@ class OperatorBracketUnitTest extends AbstractSniffUnitTest
                 193 => 1,
                 194 => 2,
             ];
-            break;
+
         case 'OperatorBracketUnitTest.js':
             return [
                 5   => 1,
@@ -90,10 +90,9 @@ class OperatorBracketUnitTest extends AbstractSniffUnitTest
                 63  => 1,
                 108 => 1,
             ];
-             break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

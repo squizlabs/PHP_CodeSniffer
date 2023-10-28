@@ -85,7 +85,7 @@ class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
                 117 => 1,
                 118 => 1,
             ];
-            break;
+
         case 'DisallowSpaceIndentUnitTest.3.inc':
             return [
                 2  => 1,
@@ -96,16 +96,15 @@ class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
                 14 => 1,
                 15 => 1,
             ];
-            break;
+
         case 'DisallowSpaceIndentUnitTest.js':
             return [3 => 1];
-            break;
+
         case 'DisallowSpaceIndentUnitTest.css':
             return [2 => 1];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

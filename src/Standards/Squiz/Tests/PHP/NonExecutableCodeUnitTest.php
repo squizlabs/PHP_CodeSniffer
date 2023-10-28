@@ -83,7 +83,7 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
                 391 => 1,
                 396 => 1,
             ];
-            break;
+
         case 'NonExecutableCodeUnitTest.2.inc':
             return [
                 7  => 1,
@@ -97,7 +97,7 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
                 70 => 2,
                 71 => 2,
             ];
-            break;
+
         case 'NonExecutableCodeUnitTest.3.inc':
             return [
                 27 => 1,
@@ -108,7 +108,6 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
             ];
         default:
             return [];
-            break;
         }//end switch
 
     }//end getWarningList()

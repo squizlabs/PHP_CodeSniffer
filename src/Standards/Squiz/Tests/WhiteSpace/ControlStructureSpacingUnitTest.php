@@ -61,7 +61,7 @@ class ControlStructureSpacingUnitTest extends AbstractSniffUnitTest
                 261 => 1,
                 262 => 1,
             ];
-            break;
+
         case 'ControlStructureSpacingUnitTest.js':
             return [
                 3  => 1,
@@ -76,10 +76,9 @@ class ControlStructureSpacingUnitTest extends AbstractSniffUnitTest
                 74 => 2,
                 75 => 2,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

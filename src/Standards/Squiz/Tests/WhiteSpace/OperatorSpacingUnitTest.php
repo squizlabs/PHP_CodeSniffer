@@ -100,7 +100,7 @@ class OperatorSpacingUnitTest extends AbstractSniffUnitTest
                 266 => 2,
                 271 => 2,
             ];
-            break;
+
         case 'OperatorSpacingUnitTest.js':
             return [
                 4   => 1,
@@ -143,10 +143,9 @@ class OperatorSpacingUnitTest extends AbstractSniffUnitTest
                 100 => 1,
                 103 => 2,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

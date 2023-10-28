@@ -30,7 +30,6 @@ class RequireStrictTypesUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'RequireStrictTypesUnitTest.1.inc':
             return [];
-            break;
         }
 
         return [1 => 1];

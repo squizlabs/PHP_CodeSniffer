@@ -50,14 +50,13 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
                 45 => 1,
                 82 => 1,
             ];
-            break;
+
         case 'LineLengthUnitTest.2.inc':
         case 'LineLengthUnitTest.3.inc':
             return [7 => 1];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()
@@ -89,20 +88,19 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
                 75 => 1,
                 84 => 1,
             ];
-            break;
+
         case 'LineLengthUnitTest.2.inc':
         case 'LineLengthUnitTest.3.inc':
             return [6 => 1];
-            break;
+
         case 'LineLengthUnitTest.4.inc':
             return [
                 10 => 1,
                 14 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getWarningList()

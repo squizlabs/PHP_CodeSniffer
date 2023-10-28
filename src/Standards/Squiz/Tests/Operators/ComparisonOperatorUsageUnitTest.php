@@ -59,7 +59,7 @@ class ComparisonOperatorUsageUnitTest extends AbstractSniffUnitTest
                 131 => 1,
                 135 => 1,
             ];
-            break;
+
         case 'ComparisonOperatorUsageUnitTest.js':
             return [
                 5  => 1,
@@ -74,10 +74,9 @@ class ComparisonOperatorUsageUnitTest extends AbstractSniffUnitTest
                 67 => 1,
                 71 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

@@ -37,7 +37,7 @@ class UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
                 19 => 1,
                 20 => 1,
             ];
-            break;
+
         case 'UnnecessaryStringConcatUnitTest.js':
             return [
                 1  => 1,
@@ -46,10 +46,9 @@ class UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
                 14 => 1,
                 15 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()
