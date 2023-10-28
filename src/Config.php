@@ -1219,13 +1219,17 @@ class Config
                 if ($this->dieOnUnknownArg === false) {
                     $eqPos = strpos($arg, '=');
                     try {
+                        $unknown = $this->unknown;
+
                         if ($eqPos === false) {
-                            $this->values[$arg] = $arg;
+                            $unknown[$arg] = $arg;
                         } else {
-                            $value = substr($arg, ($eqPos + 1));
-                            $arg   = substr($arg, 0, $eqPos);
-                            $this->values[$arg] = $value;
+                            $value         = substr($arg, ($eqPos + 1));
+                            $arg           = substr($arg, 0, $eqPos);
+                            $unknown[$arg] = $value;
                         }
+
+                        $this->unknown = $unknown;
                     } catch (RuntimeException $e) {
                         // Value is not valid, so just ignore it.
                     }
