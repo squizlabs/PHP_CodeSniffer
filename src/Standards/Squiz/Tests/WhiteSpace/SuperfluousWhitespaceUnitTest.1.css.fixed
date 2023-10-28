@@ -21,3 +21,10 @@
     float: left;
 }
 /* phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false */
+
+// /**
+//  * This text is in two types of comment: each line is commented out
+//  * individually, and the whole block is in what looks like a
+//  * docblock-comment. This sniff should ignore all this text as there
+//  * is no superfluous white-space here.
+//  */

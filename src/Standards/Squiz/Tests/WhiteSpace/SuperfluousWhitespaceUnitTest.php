@@ -84,7 +84,7 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                 8  => 1,
                 9  => 1,
                 11 => 1,
-                25 => 1,
+                32 => 1,
             ];
             break;
         default:
