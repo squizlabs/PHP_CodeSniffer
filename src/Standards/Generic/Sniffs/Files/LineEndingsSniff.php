@@ -79,7 +79,7 @@ class LineEndingsSniff implements Sniff
             if ($tokens[$lastToken]['line'] === 1
                 && $tokens[$lastToken]['content'] !== "\n"
             ) {
-                return;
+                return ($phpcsFile->numTokens + 1);
             }
         }
 

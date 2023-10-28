@@ -44,13 +44,13 @@ class CSSLintSniff implements Sniff
      * @param int                         $stackPtr  The position in the stack where
      *                                               the token was found.
      *
-     * @return void
+     * @return int
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $csslintPath = Config::getExecutablePath('csslint');
         if ($csslintPath === null) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $fileName = $phpcsFile->getFilename();
@@ -59,7 +59,7 @@ class CSSLintSniff implements Sniff
         exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $count = count($output);

@@ -45,7 +45,7 @@ class JSHintSniff implements Sniff
      * @param int                         $stackPtr  The position in the stack where
      *                                               the token was found.
      *
-     * @return void
+     * @return int
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If jshint.js could not be run
      */
     public function process(File $phpcsFile, $stackPtr)
@@ -53,7 +53,7 @@ class JSHintSniff implements Sniff
         $rhinoPath  = Config::getExecutablePath('rhino');
         $jshintPath = Config::getExecutablePath('jshint');
         if ($jshintPath === null) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $fileName   = $phpcsFile->getFilename();

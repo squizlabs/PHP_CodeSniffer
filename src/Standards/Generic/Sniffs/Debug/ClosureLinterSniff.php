@@ -60,14 +60,14 @@ class ClosureLinterSniff implements Sniff
      * @param int                         $stackPtr  The position in the stack where
      *                                               the token was found.
      *
-     * @return void
+     * @return int
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If jslint.js could not be run
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $lintPath = Config::getExecutablePath('gjslint');
         if ($lintPath === null) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $fileName = $phpcsFile->getFilename();
@@ -77,7 +77,7 @@ class ClosureLinterSniff implements Sniff
         exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         foreach ($output as $finding) {

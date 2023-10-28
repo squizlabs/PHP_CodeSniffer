@@ -46,7 +46,7 @@ class CodeAnalyzerSniff implements Sniff
     {
         $analyzerPath = Config::getExecutablePath('zend_ca');
         if ($analyzerPath === null) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $fileName = $phpcsFile->getFilename();

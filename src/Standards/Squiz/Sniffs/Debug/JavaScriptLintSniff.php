@@ -45,14 +45,14 @@ class JavaScriptLintSniff implements Sniff
      * @param int                         $stackPtr  The position in the stack where
      *                                               the token was found.
      *
-     * @return void
+     * @return int
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If Javascript Lint ran into trouble.
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $jslPath = Config::getExecutablePath('jsl');
         if ($jslPath === null) {
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $fileName = $phpcsFile->getFilename();

@@ -54,7 +54,7 @@ class OpenTagSniff implements Sniff
         $next   = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($next === false) {
             // Empty file.
-            return;
+            return $phpcsFile->numTokens;
         }
 
         if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
