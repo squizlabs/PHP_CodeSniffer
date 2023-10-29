@@ -142,6 +142,11 @@
         <type>error</type>
     </rule>
 
+    <!-- Do not allow unreachable code. -->
+    <rule ref="Squiz.PHP.NonExecutableCode">
+        <type>error</type>
+    </rule>
+
     <!-- The testing bootstrap file uses string concats to stop IDEs seeing the class aliases -->
     <rule ref="Generic.Strings.UnnecessaryStringConcat">
         <exclude-pattern>tests/bootstrap\.php</exclude-pattern>
