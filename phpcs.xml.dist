@@ -32,6 +32,7 @@
         <exclude name="PEAR.Commenting.FileComment.MissingLinkTag"/>
         <exclude name="PEAR.Commenting.FileComment.MissingVersion"/>
         <exclude name="PEAR.Commenting.InlineComment"/>
+        <exclude name="Generic.Files.LineLength"/>
     </rule>
 
     <!-- Include some sniffs from other standards that don't conflict with PEAR -->
