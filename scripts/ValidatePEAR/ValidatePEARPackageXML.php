@@ -45,7 +45,7 @@ class ValidatePEARPackageXML
      *
      * @var array
      *
-     * @link https://pear.php.net/manual/en/developers.packagedef.intro.php#developers.packagedef.roles
+     * @see https://pear.php.net/manual/en/developers.packagedef.intro.php#developers.packagedef.roles
      */
     private $validRoles = [
         'data'   => true,

@@ -650,7 +650,7 @@ final class Tokens
      *
      * @var array <int|string> => <int|string>
      *
-     * @link https://www.php.net/language.constants.predefined PHP Manual on magic constants
+     * @see https://www.php.net/language.constants.predefined PHP Manual on magic constants
      */
     public static $magicConstants = [
         T_CLASS_C  => T_CLASS_C,
