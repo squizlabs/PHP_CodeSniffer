@@ -212,8 +212,6 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
             return $endOfStatement;
         }
 
-        return;
-
     }//end processMemberVar()
 
 

@@ -148,8 +148,6 @@ abstract class AbstractScopeSniff implements Sniff
             return min($skipTokens);
         }
 
-        return;
-
     }//end process()
 
 

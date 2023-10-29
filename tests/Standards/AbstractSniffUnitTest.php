@@ -431,7 +431,6 @@ abstract class AbstractSniffUnitTest extends TestCase
      */
     public function setCliValues($filename, $config)
     {
-        return;
 
     }//end setCliValues()
 
