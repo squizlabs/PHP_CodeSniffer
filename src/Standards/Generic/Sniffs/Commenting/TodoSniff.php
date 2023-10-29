@@ -1,6 +1,6 @@
 <?php
 /**
- * Warns about TODO comments.
+ * Warns about to-do comments.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
