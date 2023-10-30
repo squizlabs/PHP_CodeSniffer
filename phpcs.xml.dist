@@ -17,10 +17,7 @@
     <arg name="parallel" value="75"/>
     <arg value="p"/>
 
-    <!-- Don't hide tokenizer exceptions -->
-    <rule ref="Internal.Tokenizer.Exception">
-        <type>error</type>
-    </rule>
+    <rule ref="Internal.Tokenizer.Exception"/>
 
     <!-- Include the whole PEAR standard -->
     <rule ref="PEAR">
@@ -77,13 +74,6 @@
     <rule ref="PSR12.Files.OpenTag"/>
     <rule ref="Zend.Files.ClosingTag"/>
 
-    <!-- PEAR uses warnings for inline control structures, so switch back to errors -->
-    <rule ref="Generic.ControlStructures.InlineControlStructure">
-        <properties>
-            <property name="error" value="true"/>
-        </properties>
-    </rule>
-
     <!-- We use custom indent rules for arrays -->
     <rule ref="Generic.Arrays.ArrayIndent"/>
     <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
@@ -112,11 +102,10 @@
         </properties>
     </rule>
 
-    <!-- Have 12 chars padding maximum and always show as errors -->
+    <!-- Have 12 chars padding maximum -->
     <rule ref="Generic.Formatting.MultipleStatementAlignment">
         <properties>
             <property name="maxPadding" value="12"/>
-            <property name="error" value="true"/>
         </properties>
     </rule>
 
@@ -131,16 +120,6 @@
                 <element key="create_function" value="null"/>
             </property>
         </properties>
-    </rule>
-
-    <!-- Private methods MUST not be prefixed with an underscore -->
-    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
-        <type>error</type>
-    </rule>
-
-    <!-- Private properties MUST not be prefixed with an underscore -->
-    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
-        <type>error</type>
     </rule>
 
     <!-- The testing bootstrap file uses string concats to stop IDEs seeing the class aliases -->
