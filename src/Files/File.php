@@ -909,6 +909,7 @@ class File
         // Filter out any messages for sniffs that shouldn't have run
         // due to the use of the --sniffs command line argument.
         if ($includeAll === false
+            && $parts[0] !== 'Internal'
             && ((empty($this->configCache['sniffs']) === false
             && in_array(strtolower($listenerCode), $this->configCache['sniffs'], true) === false)
             || (empty($this->configCache['exclude']) === false
