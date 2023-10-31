@@ -25,7 +25,10 @@ class BacktickOperatorUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [2 => 2];
+        return [
+            2 => 2,
+            9 => 2,
+        ];
 
     }//end getErrorList()
 
@@ -40,6 +43,7 @@ class BacktickOperatorUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
+        // Warning about incorrect annotation will be shown on line 1 once PR #3915 would be merged.
         return [];
 
     }//end getWarningList()

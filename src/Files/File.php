@@ -343,6 +343,7 @@ class File
         $listenerIgnoreTo = [];
         $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
         $checkAnnotations = $this->config->annotations;
+        $annotationErrors = [];
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
@@ -411,7 +412,15 @@ class File
                                 'scope' => 'sniff',
                             ];
                             $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
-                            $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $settings);
+                            try {
+                                $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $settings);
+                            } catch (RuntimeException $e) {
+                                // Non-existant property being set via an inline annotation.
+                                // This is typically a PHPCS test case file, but we can't throw an error on the annotation
+                                // line as it would get ignored. We also don't want this error to block
+                                // the scan of the current file, so collect these and throw later.
+                                $annotationErrors[] = 'Line '.$token['line'].': '.str_replace('Ruleset invalid. ', '', $e->getMessage());
+                            }
                         }
                     }
                 }//end if
@@ -534,6 +543,13 @@ class File
                 $error = 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.';
                 $this->addWarning($error, null, 'Internal.NoCodeFound');
             }
+        }
+
+        if ($annotationErrors !== []) {
+            $error  = 'Encountered invalid inline phpcs:set annotations. Found:'.PHP_EOL;
+            $error .= implode(PHP_EOL, $annotationErrors);
+
+            $this->addWarning($error, null, 'Internal.PropertyDoesNotExist');
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
