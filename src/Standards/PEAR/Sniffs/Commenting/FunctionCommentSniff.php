@@ -129,11 +129,25 @@ class FunctionCommentSniff implements Sniff
                     && $tokens[$i]['line'] !== $tokens[($i + 1)]['line']
                 ) {
                     $error = 'There must be no blank lines after the function comment';
-                    $phpcsFile->addError($error, $commentEnd, 'SpacingAfter');
+                    $fix   = $phpcsFile->addFixableError($error, $commentEnd, 'SpacingAfter');
+
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        while ($i < $stackPtr
+                            && $tokens[$i]['code'] === T_WHITESPACE
+                            && $tokens[$i]['line'] !== $tokens[($i + 1)]['line']
+                        ) {
+                            $phpcsFile->fixer->replaceToken($i++, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                    }
+
                     break;
                 }
-            }
-        }
+            }//end for
+        }//end if
 
         $commentStart = $tokens[$commentEnd]['comment_opener'];
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
