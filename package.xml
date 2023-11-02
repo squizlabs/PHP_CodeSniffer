@@ -65,6 +65,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Squiz.Commenting.FunctionComment: new ParamNameUnexpectedAmpersandPrefix error for parameters annotated as passed by reference while the parameter is not passed by reference
     -- Thanks to Dan Wallis (@fredden) for the patch
+  - PEAR.Commenting.FunctionComment + Squiz.Commenting.FunctionComment: the SpacingAfter error can now be auto-fixed.
+    -- Thanks to Dan Wallis (@fredden) for the patch
   - Squiz.PHP.InnerFunctions sniff no longer reports on OO methods for OO structures declared within a function or closure
     -- Thanks to @Daimona for the patch
   - Documentation has been added for the following sniffs:
