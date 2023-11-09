@@ -45,6 +45,20 @@ class Runner
      */
     public $reporter = null;
 
+    /**
+     * @param \PHP_CodeSniffer\Config|null $config Config object
+     */
+    public function __construct($config = null)
+    {
+        // Creating the Config object populates it with all required settings
+        // based on the CLI arguments provided to the script and any config
+        // values the user has set.
+        if ($config === null) {
+            $config = new Config();
+        }
+        $this->config = $config;
+    }//end __construct()
+
 
     /**
      * Run the PHPCS script.
@@ -62,11 +76,6 @@ class Runner
             if (defined('PHP_CODESNIFFER_CBF') === false) {
                 define('PHP_CODESNIFFER_CBF', false);
             }
-
-            // Creating the Config object populates it with all required settings
-            // based on the CLI arguments provided to the script and any config
-            // values the user has set.
-            $this->config = new Config();
 
             // Init the run and load the rulesets to set additional config vars.
             $this->init();
@@ -164,11 +173,6 @@ class Runner
         try {
             Util\Timing::startTiming();
             Runner::checkRequirements();
-
-            // Creating the Config object populates it with all required settings
-            // based on the CLI arguments provided to the script and any config
-            // values the user has set.
-            $this->config = new Config();
 
             // When processing STDIN, we can't output anything to the screen
             // or it will end up mixed in with the file output.
