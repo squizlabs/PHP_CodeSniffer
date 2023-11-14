@@ -115,6 +115,14 @@ class Full implements Report
         // The maximum amount of space an error message can use.
         $maxErrorSpace = ($width - $paddingLength - 1);
 
+        if ($showSources === true) {
+            $beforeMsg = "\033[1m";
+            $afterMsg  = "\033[0m";
+        } else {
+            $beforeMsg = '';
+            $afterMsg  = '';
+        }
+
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
@@ -128,23 +136,35 @@ class Full implements Report
                     $lastLine = (count($msgLines) - 1);
                     foreach ($msgLines as $k => $msgLine) {
                         if ($k === 0) {
-                            if ($showSources === true) {
-                                $errorMsg .= "\033[1m";
-                            }
+                            $errorMsg .= $beforeMsg;
                         } else {
-                            $errorMsg .= PHP_EOL.$paddingLine2;
+                            $errorMsg .= $afterMsg.PHP_EOL.$paddingLine2.$beforeMsg;
                         }
 
-                        if ($k === $lastLine && $showSources === true) {
-                            $msgLine .= "\033[0m".' ('.$error['source'].')';
-                        }
-
-                        $errorMsg .= wordwrap(
+                        $wrappedLines = wordwrap(
                             $msgLine,
                             $maxErrorSpace,
-                            PHP_EOL.$paddingLine2
+                            $afterMsg.PHP_EOL.$paddingLine2.$beforeMsg
                         );
-                    }
+                        $errorMsg    .= $wrappedLines;
+
+                        if ($k === $lastLine) {
+                            $errorMsg .= $afterMsg;
+                            if ($showSources === true) {
+                                $lastLineLength = strlen($wrappedLines);
+                                $lastNewlinePos = strrpos($wrappedLines, PHP_EOL);
+                                if ($lastNewlinePos !== false) {
+                                    $lastLineLength -= ($lastNewlinePos + strlen(PHP_EOL.$paddingLine2.$beforeMsg));
+                                }
+
+                                if (($lastLineLength + strlen($error['source']) + 3) > $maxErrorSpace) {
+                                    $errorMsg .= PHP_EOL.$paddingLine2.'('.$error['source'].')';
+                                } else {
+                                    $errorMsg .= ' ('.$error['source'].')';
+                                }
+                            }
+                        }
+                    }//end foreach
 
                     // The padding that goes on the front of the line.
                     $padding = ($maxLineNumLength - strlen($line));
