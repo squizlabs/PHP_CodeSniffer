@@ -47,6 +47,7 @@ class Junit implements Report
 
             $out->startElement('testcase');
             $out->writeAttribute('name', $report['filename']);
+            $out->writeAttribute('file', $report['filename']);
             $out->endElement();
         } else {
             $failures = ($report['errors'] + $report['warnings']);
@@ -58,6 +59,7 @@ class Junit implements Report
                     foreach ($colErrors as $error) {
                         $out->startElement('testcase');
                         $out->writeAttribute('name', $error['source'].' at '.$report['filename']." ($line:$column)");
+                        $out->writeAttribute('file', $report['filename']);
 
                         $error['type'] = strtolower($error['type']);
                         if ($phpcsFile->config->encoding !== 'utf-8') {
@@ -72,7 +74,7 @@ class Junit implements Report
                         $out->endElement();
                     }
                 }
-            }
+            }//end foreach
         }//end if
 
         $out->endElement();
