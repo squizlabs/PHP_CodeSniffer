@@ -79,3 +79,20 @@ class MyClass
 var_dump(MyClass::true);
 
 function true() {}
+
+// Issue #3332 - ignore type declarations, but not default values.
+class TypedThings {
+	const MYCONST = FALSE;
+
+	public int|false $int = FALSE;
+	public Type|null $int = new MyObj(NULL);
+
+	private function typed(int|false $param = NULL, Type|null $obj = new MyObj(FALSE)) : string|false|null
+	{
+		if (TRUE === FALSE) {
+			return NULL;
+        }
+    }
+}
+
+$cl = function (int|false $param = NULL, Type|null $obj = new MyObj(FALSE)) : string|false|null {};

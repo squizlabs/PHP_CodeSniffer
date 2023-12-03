@@ -39,6 +39,8 @@ $a = [
 /* testStaticArrowFunction */
 static fn ($a) => $a;
 
+return 0;
+
 /* testArrowFunctionReturnValue */
 fn(): array => [a($a, $b)];
 
@@ -101,5 +103,3 @@ $result = match ($key) {
         2 => 'one',
     },
 };
-
-return 0;

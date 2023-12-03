@@ -1,0 +1,23 @@
+<documentation title="Closing Tag">
+    <standard>
+    <![CDATA[
+    Checks that the file does not end with a closing tag.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Closing tag not used.">
+        <![CDATA[
+<?php
+echo 'Foo';
+<em></em>
+        ]]>
+        </code>
+        <code title="Invalid: Closing tag used.">
+        <![CDATA[
+<?php
+echo 'Foo';
+<em>?></em>
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

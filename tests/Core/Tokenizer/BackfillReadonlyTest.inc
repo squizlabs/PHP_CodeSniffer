@@ -92,6 +92,9 @@ $var = readonly($a, $b);
 /* testClassConstantFetchWithReadonlyAsConstantName */
 echo ClassName::READONLY;
 
+/* testReadonlyUsedAsFunctionCallWithSpaceBetweenKeywordAndParens */
+$var = readonly /* comment */ ();
+
 /* testParseErrorLiveCoding */
 // This must be the last test in the file.
 readonly

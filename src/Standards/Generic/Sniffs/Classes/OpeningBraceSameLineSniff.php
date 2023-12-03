@@ -27,6 +27,7 @@ class OpeningBraceSameLineSniff implements Sniff
             T_CLASS,
             T_INTERFACE,
             T_TRAIT,
+            T_ENUM,
         ];
 
     }//end register()

@@ -163,6 +163,10 @@ class GotoLabelTest extends AbstractMethodUnitTest
                 '/* testNotGotoDeclarationGlobalConstantInTernary */',
                 'CONST_B',
             ],
+            [
+                '/* testNotGotoDeclarationEnumWithType */',
+                'Suit',
+            ],
         ];
 
     }//end dataNotAGotoDeclaration()

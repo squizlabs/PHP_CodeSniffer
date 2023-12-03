@@ -6,6 +6,7 @@ const CONSTANT2 = 2;
 
 use Something;
 use SomethingElse;
+use function interface_exists;
 
 declare(ticks=1);
 
@@ -63,11 +64,24 @@ if (!interface_exists('MyInterface')) {
     interface MyInterface {}
 }
 
+if (!interface_exists('MyEnum')) {
+    // Define an enum.
+    enum MyEnum {}
+}
+
 #[\Attribute]
 namespace {
     class A {}
 }
 
 defined('APP_BASE_URL') or define('APP_BASE_URL', '/');
+
+readonly class Foo {
+    public function __construct(
+        private string $foo,
+        private string $bar,
+    ) {
+    }
+}
 
 ?>

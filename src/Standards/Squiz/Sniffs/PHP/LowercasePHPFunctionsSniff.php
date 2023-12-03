@@ -75,6 +75,11 @@ class LowercasePHPFunctionsSniff implements Sniff
         }
 
         // Make sure this is a function call or a use statement.
+        if (empty($tokens[$stackPtr]['nested_attributes']) === false) {
+            // Class instantiation in attribute, not function call.
+            return;
+        }
+
         $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($next === false) {
             // Not a function call.

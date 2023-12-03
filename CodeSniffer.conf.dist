@@ -5,5 +5,5 @@
   'show_warnings' => '0',
   'show_progress' => '1',
   'report_width' => '120',
-)
+);
 ?>

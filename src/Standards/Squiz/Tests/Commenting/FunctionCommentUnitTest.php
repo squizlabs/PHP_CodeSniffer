@@ -48,8 +48,7 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             138  => 4,
             139  => 4,
             143  => 2,
-            152  => 1,
-            155  => 2,
+            155  => 1,
             159  => 1,
             166  => 1,
             173  => 1,
@@ -116,6 +115,23 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             1004 => 2,
             1006 => 1,
             1029 => 1,
+            1053 => 1,
+            1058 => 2,
+            1069 => 1,
+            1070 => 1,
+            1071 => 1,
+            1080 => 2,
+            1083 => 1,
+            1084 => 1,
+            1085 => 1,
+            1093 => 4,
+            1100 => 1,
+            1101 => 1,
+            1102 => 1,
+            1103 => 1,
+            1123 => 1,
+            1124 => 1,
+            1125 => 1,
         ];
 
         // Scalar type hints only work from PHP 7 onwards.
@@ -131,12 +147,16 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             $errors[575]  = 2;
             $errors[627]  = 1;
             $errors[1002] = 1;
+            $errors[1075] = 6;
+            $errors[1089] = 3;
+            $errors[1107] = 8;
+            $errors[1129] = 3;
         } else {
             $errors[729] = 4;
             $errors[740] = 2;
             $errors[752] = 2;
             $errors[982] = 1;
-        }
+        }//end if
 
         // Object type hints only work from PHP 7.2 onwards.
         if (PHP_VERSION_ID >= 70200) {

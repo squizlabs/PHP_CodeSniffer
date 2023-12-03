@@ -13,7 +13,7 @@ interface FooBar extends namespace\BarFoo {}
 function foo() : namespace\Baz {}
 
 /* testClosureReturnType */
-$closure = function () : namespace\Baz {}
+$closure = function () : namespace\Baz {};
 
 /* testArrowFunctionReturnType */
 $fn = fn() : namespace\Baz => new namespace\Baz;

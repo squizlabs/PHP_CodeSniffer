@@ -563,3 +563,22 @@ array_fill_keys(
     value: true,
 );
 // phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments true
+
+?>
+<div>
+    <p/><?php require get_theme_file_path(
+        '/theme_extra/test_block.php'
+    ); ?></p>
+</div>
+<div>
+<p/><?php require get_theme_file_path(
+    '/theme_extra/test_block.php'
+); ?></p>
+</div>
+<?php
+echo 'hi';
+?>
+content
+    <p><?php require get_theme_file_path(
+        '/theme_extra/test_block.php'
+); ?></p>

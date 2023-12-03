@@ -23,10 +23,10 @@ class Code implements Report
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      *
-     * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
-     * @param bool                  $showSources Show sources?
-     * @param int                   $width       Maximum allowed line width.
+     * @param array                       $report      Prepared report data.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being reported on.
+     * @param bool                        $showSources Show sources?
+     * @param int                         $width       Maximum allowed line width.
      *
      * @return bool
      */
@@ -225,7 +225,7 @@ class Code implements Report
                     if (strpos($tokenContent, "\t") !== false) {
                         $token            = $tokens[$i];
                         $token['content'] = $tokenContent;
-                        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                        if (stripos(PHP_OS, 'WIN') === 0) {
                             $tab = "\000";
                         } else {
                             $tab = "\033[30;1m»\033[0m";

@@ -151,3 +151,15 @@ $a = (
 if (true) {} (1+2) === 3 ? $a = 1 : $a = 2;
 class A {} (1+2) === 3 ? $a = 1 : $a = 2;
 function foo() {} (1+2) === 3 ? $a = 1 : $a = 2;
+
+// Issue #3618.
+class NonArbitraryParenthesesWithKeywords {
+    public static function baz( $foo, $bar ) {
+        $a = new self();
+        $b = new parent();
+        $c = new static();
+
+        // self/static are already tested above, round line 45.
+        $d = new parent( $foo,$bar );
+    }
+}

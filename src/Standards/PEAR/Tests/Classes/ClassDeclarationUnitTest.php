@@ -61,6 +61,7 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 99  => 1,
                 104 => 1,
                 110 => 1,
+                114 => 1,
             ];
 
         default:

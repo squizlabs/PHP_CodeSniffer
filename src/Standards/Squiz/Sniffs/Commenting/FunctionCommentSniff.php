@@ -143,9 +143,12 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                             }
                         }
                     }//end if
-                } else if ($returnType !== 'mixed' && in_array('void', $typeNames, true) === false) {
-                    // If return type is not void, there needs to be a return statement
-                    // somewhere in the function that returns something.
+                } else if ($returnType !== 'mixed'
+                    && $returnType !== 'never'
+                    && in_array('void', $typeNames, true) === false
+                ) {
+                    // If return type is not void, never, or mixed, there needs to be a
+                    // return statement somewhere in the function that returns something.
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
                         $endToken = $tokens[$stackPtr]['scope_closer'];
                         for ($returnToken = $stackPtr; $returnToken < $endToken; $returnToken++) {
@@ -405,6 +408,10 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             $suggestedTypeNames = [];
 
             foreach ($typeNames as $typeName) {
+                if ($typeName === '') {
+                    continue;
+                }
+
                 // Strip nullable operator.
                 if ($typeName[0] === '?') {
                     $typeName = substr($typeName, 1);
@@ -551,16 +558,38 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
-                $realName = $realParams[$pos]['name'];
-                if ($realName !== $param['var']) {
+                $realName     = $realParams[$pos]['name'];
+                $paramVarName = $param['var'];
+
+                if ($param['var'][0] === '&') {
+                    // Even when passed by reference, the variable name in $realParams does not have
+                    // a leading '&'. This sniff will accept both '&$var' and '$var' in these cases.
+                    $paramVarName = substr($param['var'], 1);
+
+                    // This makes sure that the 'MissingParamTag' check won't throw a false positive.
+                    $foundParams[(count($foundParams) - 1)] = $paramVarName;
+
+                    if ($realParams[$pos]['pass_by_reference'] !== true && $realName === $paramVarName) {
+                        // Don't complain about this unless the param name is otherwise correct.
+                        $error = 'Doc comment for parameter %s is prefixed with "&" but parameter is not passed by reference';
+                        $code  = 'ParamNameUnexpectedAmpersandPrefix';
+                        $data  = [$paramVarName];
+
+                        // We're not offering an auto-fix here because we can't tell if the docblock
+                        // is wrong, or the parameter should be passed by reference.
+                        $phpcsFile->addError($error, $param['tag'], $code, $data);
+                    }
+                }
+
+                if ($realName !== $paramVarName) {
                     $code = 'ParamNameNoMatch';
                     $data = [
-                        $param['var'],
+                        $paramVarName,
                         $realName,
                     ];
 
                     $error = 'Doc comment for parameter %s does not match ';
-                    if (strtolower($param['var']) === strtolower($realName)) {
+                    if (strtolower($paramVarName) === strtolower($realName)) {
                         $error .= 'case of ';
                         $code   = 'ParamNameNoCaseMatch';
                     }
@@ -568,7 +597,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $error .= 'actual variable name %s';
 
                     $phpcsFile->addError($error, $param['tag'], $code, $data);
-                }
+                }//end if
             } else if (substr($param['var'], -4) !== ',...') {
                 // We must have an extra parameter comment.
                 $error = 'Superfluous parameter comment';

@@ -66,3 +66,25 @@ trait _Invalid_Name {}
 trait ___ {}
 
 trait Invalid__Name {}
+
+enum Valid_Name: string {}
+
+enum invalid_Name : String {}
+
+enum invalid_name {}
+
+enum Invalid_name: Int {}
+
+enum VALID_Name {}
+
+enum VALID_NAME {}
+
+enum VALID_Name : int {}
+
+enum ValidName {}
+
+enum _Invalid_Name {}
+
+enum ___ {}
+
+enum Invalid__Name {}

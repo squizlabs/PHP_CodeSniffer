@@ -453,7 +453,6 @@ class Something implements JsonSerializable {
      *
      * @return mixed
      */
-
     #[ReturnTypeWillChange]
     public function blankLineDetectionA() {}
 
@@ -463,7 +462,6 @@ class Something implements JsonSerializable {
      * @return mixed
      */
     #[ReturnTypeWillChange]
-
     public function blankLineDetectionB() {}
 
     /**
@@ -471,8 +469,23 @@ class Something implements JsonSerializable {
      *
      * @return mixed
      */
-
     #[ReturnTypeWillChange]
-
     public function blankLineDetectionC() {}
+}
+
+class SpacingAfter {
+    /**
+     * There are multiple blank lines between this comment and the next function.
+     *
+     * @return void
+     */
+    public function multipleBlankLines() {}
+
+    /**
+     * There are multiple blank lines, and some "empty" lines with only
+     * spaces/tabs between this comment and the next function.
+     *
+     * @return void
+     */
+    public function multipleLinesSomeEmpty() {}
 }

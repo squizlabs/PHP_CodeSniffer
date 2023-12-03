@@ -24,7 +24,6 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use PHP_CodeSniffer\Util\Tokens;
 
 class UnnecessaryFinalModifierSniff implements Sniff
 {
@@ -56,16 +55,13 @@ class UnnecessaryFinalModifierSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
 
-        // Skip for-statements without body.
+        // Skip for statements without body.
         if (isset($token['scope_opener']) === false) {
             return;
         }
 
-        // Fetch previous token.
-        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-
-        // Skip for non final class.
-        if ($prev === false || $tokens[$prev]['code'] !== T_FINAL) {
+        if ($phpcsFile->getClassProperties($stackPtr)['is_final'] === false) {
+            // This class is not final so we don't need to check it.
             return;
         }
 
@@ -76,6 +72,13 @@ class UnnecessaryFinalModifierSniff implements Sniff
             if ($tokens[$next]['code'] === T_FINAL) {
                 $error = 'Unnecessary FINAL modifier in FINAL class';
                 $phpcsFile->addWarning($error, $next, 'Found');
+            }
+
+            // Skip over the contents of functions as those can't contain the `final` keyword anyway.
+            if ($tokens[$next]['code'] === T_FUNCTION
+                && isset($tokens[$next]['scope_closer']) === true
+            ) {
+                $next = $tokens[$next]['scope_closer'];
             }
         }
 
