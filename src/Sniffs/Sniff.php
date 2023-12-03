@@ -45,7 +45,7 @@ interface Sniff
      * is found.
      *
      * The stackPtr variable indicates where in the stack the token was found.
-     * A sniff can acquire information this token, along with all the other
+     * A sniff can acquire information about this token, along with all the other
      * tokens within the stack by first acquiring the token stack:
      *
      * <code>

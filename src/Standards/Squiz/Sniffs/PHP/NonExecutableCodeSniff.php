@@ -16,6 +16,22 @@ use PHP_CodeSniffer\Util\Tokens;
 class NonExecutableCodeSniff implements Sniff
 {
 
+    /**
+     * Tokens for terminating expressions, which can be used inline.
+     *
+     * This is in contrast to terminating statements, which cannot be used inline
+     * and would result in a parse error (which is not the concern of this sniff).
+     *
+     * `throw` can be used as an expression since PHP 8.0.
+     * {@link https://wiki.php.net/rfc/throw_expression}
+     *
+     * @var array
+     */
+    private $expressionTokens = [
+        T_EXIT  => T_EXIT,
+        T_THROW => T_THROW,
+    ];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -49,12 +65,34 @@ class NonExecutableCodeSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // If this token is preceded with an "or", it only relates to one line
-        // and should be ignored. For example: fopen() or die().
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-        if ($tokens[$prev]['code'] === T_LOGICAL_OR || $tokens[$prev]['code'] === T_BOOLEAN_OR) {
-            return;
-        }
+
+        // Tokens which can be used in inline expressions need special handling.
+        if (isset($this->expressionTokens[$tokens[$stackPtr]['code']]) === true) {
+            // If this token is preceded by a logical operator, it only relates to one line
+            // and should be ignored. For example: fopen() or die().
+            // Note: There is one exception: throw expressions can not be used with xor.
+            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true
+                && ($tokens[$stackPtr]['code'] === T_THROW && $tokens[$prev]['code'] === T_LOGICAL_XOR) === false
+            ) {
+                return;
+            }
+
+            // Expressions are allowed in the `else` clause of ternaries.
+            if ($tokens[$prev]['code'] === T_INLINE_THEN || $tokens[$prev]['code'] === T_INLINE_ELSE) {
+                return;
+            }
+
+            // Expressions are allowed with PHP 7.0+ null coalesce and PHP 7.4+ null coalesce equals.
+            if ($tokens[$prev]['code'] === T_COALESCE || $tokens[$prev]['code'] === T_COALESCE_EQUAL) {
+                return;
+            }
+
+            // Expressions are allowed in arrow functions.
+            if ($tokens[$prev]['code'] === T_FN_ARROW) {
+                return;
+            }
+        }//end if
 
         // Check if this token is actually part of a one-line IF or ELSE statement.
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
@@ -139,7 +177,6 @@ class NonExecutableCodeSniff implements Sniff
         // This token may be part of an inline condition.
         // If we find a closing parenthesis that belongs to a condition
         // we should ignore this token.
-        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if (isset($tokens[$prev]['parenthesis_owner']) === true) {
             $owner  = $tokens[$prev]['parenthesis_owner'];
             $ignore = [
@@ -204,8 +241,8 @@ class NonExecutableCodeSniff implements Sniff
             $end = ($phpcsFile->numTokens - 1);
         }//end if
 
-        // Find the semicolon that ends this statement, skipping
-        // nested statements like FOR loops and closures.
+        // Find the semicolon or closing PHP tag that ends this statement,
+        // skipping nested statements like FOR loops and closures.
         for ($start = ($stackPtr + 1); $start < $phpcsFile->numTokens; $start++) {
             if ($start === $end) {
                 break;
@@ -225,7 +262,7 @@ class NonExecutableCodeSniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$start]['code'] === T_SEMICOLON) {
+            if ($tokens[$start]['code'] === T_SEMICOLON || $tokens[$start]['code'] === T_CLOSE_TAG) {
                 break;
             }
         }//end for
@@ -255,6 +292,16 @@ class NonExecutableCodeSniff implements Sniff
                 }
 
                 $i = $tokens[$i]['scope_closer'];
+                continue;
+            }
+
+            // Skip HTML whitespace.
+            if ($tokens[$i]['code'] === T_INLINE_HTML && \trim($tokens[$i]['content']) === '') {
+                continue;
+            }
+
+            // Skip PHP re-open tag (eg, after inline HTML).
+            if ($tokens[$i]['code'] === T_OPEN_TAG) {
                 continue;
             }
 

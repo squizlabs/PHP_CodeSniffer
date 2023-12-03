@@ -81,3 +81,14 @@ class ConstructorPropertyPromotionWithTypes {
 class ConstructorPropertyPromotionAndNormalParams {
     public function __construct(public Int $promotedProp, ?Int $normalArg) {}
 }
+
+function (): NeVeR {
+    exit;
+};
+
+function intersectionParamTypes (\Package\ClassName&\Package\Other_Class $var) {}
+
+function intersectionReturnTypes ($var): \Package\ClassName&\Package\Other_Class {}
+
+$arrow = fn (int $a, string $b, bool $c, array $d, Foo\Bar $e) : int => $a * $b;
+$arrow = fn (Int $a, String $b, BOOL $c, Array $d, Foo\Bar $e) : Float => $a * $b;

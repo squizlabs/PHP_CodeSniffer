@@ -196,7 +196,11 @@ class CSS extends PHP
 
                 // The first and last tokens are the open/close tags.
                 array_shift($commentTokens);
-                array_pop($commentTokens);
+                $closeTag = array_pop($commentTokens);
+
+                while ($closeTag['content'] !== '?'.'>') {
+                    $closeTag = array_pop($commentTokens);
+                }
 
                 if ($leadingZero === true) {
                     $commentTokens[0]['content'] = substr($commentTokens[0]['content'], 1);

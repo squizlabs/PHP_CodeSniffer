@@ -47,3 +47,11 @@ $instance = new class extends \Foo implements \HandleableInterface {
     // Class content
 };
 
+enum Valid
+{
+}
+
+enum Invalid
+{
+
+}

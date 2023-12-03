@@ -220,3 +220,24 @@ abstract class My_Class {
     public function my_class() {}
     public function _MY_CLASS() {}
 }
+
+enum Suit: string implements Colorful, CardGame {
+    // Magic methods.
+    function __call($name, $args) {}
+    static function __callStatic($name, $args) {}
+    function __invoke() {}
+
+    // Valid Method Name.
+    public function parseMyDSN() {}
+    private function _getAnotherValue() {}
+
+    // Double underscore non-magic methods not allowed.
+    function __myFunction() {}
+    function __my_function() {}
+
+    // Non-camelcase.
+    public function get_some_value() {}
+
+	// Private without underscore prefix.
+    private function getMe() {}
+}

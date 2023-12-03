@@ -10,6 +10,7 @@
 
     <exclude-pattern>*/src/Standards/*/Tests/*\.(inc|css|js)$</exclude-pattern>
     <exclude-pattern>*/tests/Core/*/*\.(inc|css|js)$</exclude-pattern>
+    <exclude-pattern>*/tests/Core/*/Fixtures/*\.php$</exclude-pattern>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>

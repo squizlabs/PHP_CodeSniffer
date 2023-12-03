@@ -120,3 +120,16 @@ class ConstructorPropertyPromotionTest {
 class ConstructorPropertyPromotionWithTypesTest {
     public function __construct(protected float|int $x, public ?string &$y = 'test', private mixed $z) {}
 }
+
+// PHP 8.1 readonly keywords.
+class ReadonlyTest {
+    public readonly int $publicReadonlyProperty;
+
+    protected readonly int $protectedReadonlyProperty;
+
+    readonly protected int $protectedReadonlyProperty;
+
+    readonly private int $privateReadonlyProperty;
+
+    public function __construct(readonly protected float|int $x, public readonly ?string &$y = 'test') {}
+}

@@ -79,4 +79,8 @@ class TestClass
 }
 //end class
 
-?>
+enum MissingClosingComment {
+}
+
+enum HasClosingComment {
+}//end enum

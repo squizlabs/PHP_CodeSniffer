@@ -297,5 +297,104 @@ class TestAlternativeControlStructures {
 $var_after_class_in_global_space = 1;
 do_something_else();
 
+// These are parse errors, but that's not the concern of the sniff.
+function parseError1() {
+    defined('FOO') or return 'foo';
+    echo 'unreachable';
+}
+
+function parseError2() {
+    defined('FOO') || continue;
+    echo 'unreachable';
+}
+
+// All logical operators are allowed with inline expressions (but this was not correctly handled by the sniff).
+function exitExpressionsWithLogicalOperators() {
+    $condition = false;
+    $condition || exit();
+    $condition or die();
+
+    $condition = true;
+    $condition && die();
+    $condition and exit;
+
+    $condition xor die();
+
+    echo 'still executable as exit, in all of the above cases, is used as part of an expression';
+}
+
+// Inline expressions are allowed in ternaries.
+function exitExpressionsInTernary() {
+    $value = $myValue ? $myValue : exit();
+    $value = $myValue ?: exit();
+    $value = $var == 'foo' ? 'bar' : die( 'world' );
+
+    $value = (!$myValue ) ? exit() : $myValue;
+    $value = $var != 'foo' ? die( 'world' ) : 'bar';
+
+    echo 'still executable';
+}
+
+// Inline expressions are allowed with null coalesce and null coalesce equals.
+function exitExpressionsWithNullCoalesce() {
+    $value = $nullableValue ?? exit();
+    $value ??= die();
+    echo 'still executable';
+}
+
+// Inline expressions are allowed in arrow functions.
+function exitExpressionsInArrowFunction() {
+    $callable = fn() => die();
+    echo 'still executable';
+}
+
+// PHP 8.0+: throw expressions which don't stop execution.
+function nonStoppingThrowExpressions() {
+    $callable = fn() => throw new Exception();
+
+    $value = $myValue ? 'something' : throw new Exception();
+    $value = $myValue ?: throw new Exception();
+    $value = $myValue ? throw new Exception() : 'something';
+
+    $value = $nullableValue ?? throw new Exception();
+    $value ??= throw new Exception();
+
+    $condition && throw new Exception();
+    $condition || throw new Exception();
+    $condition and throw new Exception();
+    $condition or throw new Exception();
+
+    echo 'still executable as throw, in all of the above cases, is used as part of an expression';
+
+    throw new Exception();
+    echo 'non-executable';
+}
+
+// PHP 8.0+: throw expressions which do stop execution.
+function executionStoppingThrowExpressionsA() {
+    $condition xor throw new Exception();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsB() {
+    throw $userIsAuthorized ? new ForbiddenException() : new UnauthorizedException();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsC() {
+    throw $condition1 && $condition2 ? new Exception1() : new Exception2();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsD() {
+    throw $exception ??= new Exception();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsE() {
+    throw $maybeNullException ?? new Exception();
+    echo 'non-executable';
+}
+
 // Intentional syntax error.
 return array_map(

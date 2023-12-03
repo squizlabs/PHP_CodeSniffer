@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class InnerFunctionsSniff implements Sniff
 {
@@ -41,21 +42,28 @@ class InnerFunctionsSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $function = $phpcsFile->getCondition($stackPtr, T_FUNCTION);
-        if ($function === false) {
+        if (isset($tokens[$stackPtr]['conditions']) === false) {
+            return;
+        }
+
+        $conditions         = $tokens[$stackPtr]['conditions'];
+        $reversedConditions = array_reverse($conditions, true);
+
+        $outerFuncToken = null;
+        foreach ($reversedConditions as $condToken => $condition) {
+            if ($condition === T_FUNCTION || $condition === T_CLOSURE) {
+                $outerFuncToken = $condToken;
+                break;
+            }
+
+            if (\array_key_exists($condition, Tokens::$ooScopeTokens) === true) {
+                // Ignore methods in OOP structures defined within functions.
+                return;
+            }
+        }
+
+        if ($outerFuncToken === null) {
             // Not a nested function.
-            return;
-        }
-
-        $class = $phpcsFile->getCondition($stackPtr, T_ANON_CLASS, false);
-        if ($class !== false && $class > $function) {
-            // Ignore methods in anon classes.
-            return;
-        }
-
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($tokens[$prev]['code'] === T_EQUAL) {
-            // Ignore closures.
             return;
         }
 

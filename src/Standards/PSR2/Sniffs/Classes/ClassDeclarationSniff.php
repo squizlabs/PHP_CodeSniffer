@@ -71,7 +71,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
 
-                if (in_array($tokens[($stackPtr - 2)]['code'], [T_ABSTRACT, T_FINAL], true) === true
+                if (in_array($tokens[($stackPtr - 2)]['code'], [T_ABSTRACT, T_FINAL, T_READONLY], true) === true
                     && $spaces !== 1
                 ) {
                     $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
@@ -89,6 +89,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 }
             } else if ($tokens[($stackPtr - 2)]['code'] === T_ABSTRACT
                 || $tokens[($stackPtr - 2)]['code'] === T_FINAL
+                || $tokens[($stackPtr - 2)]['code'] === T_READONLY
             ) {
                 $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
                 $error       = 'Expected 1 space between %s and %s keywords; newline found';

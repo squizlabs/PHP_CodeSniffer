@@ -110,3 +110,5 @@ if (!class_exists('ClassOpeningBraceTooMuchIndentation')) {
         {
         }
 }
+
+enum IncorrectBracePlacement {}

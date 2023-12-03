@@ -64,6 +64,8 @@ class DocCommentAlignmentSniff implements Sniff
         $ignore    = [
             T_CLASS     => true,
             T_INTERFACE => true,
+            T_ENUM      => true,
+            T_ENUM_CASE => true,
             T_FUNCTION  => true,
             T_PUBLIC    => true,
             T_PRIVATE   => true,

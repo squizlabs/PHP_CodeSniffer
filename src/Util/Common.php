@@ -250,7 +250,7 @@ class Common
     {
         $cmd = escapeshellcmd($cmd);
 
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if (stripos(PHP_OS, 'WIN') === 0) {
             // Spaces are not escaped by escapeshellcmd on Windows, but need to be
             // for the command to be able to execute.
             $cmd = preg_replace('`(?<!^) `', '^ ', $cmd);
@@ -275,7 +275,7 @@ class Common
      */
     public static function prepareForOutput($content, $exclude=[])
     {
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if (stripos(PHP_OS, 'WIN') === 0) {
             if (in_array("\r", $exclude, true) === false) {
                 $content = str_replace("\r", '\r', $content);
             }
@@ -372,7 +372,7 @@ class Common
             for ($i = 1; $i < $length; $i++) {
                 $ascii = ord($string[$i]);
                 if ($ascii >= 48 && $ascii <= 57) {
-                    // The character is a number, so it cant be a capital.
+                    // The character is a number, so it can't be a capital.
                     $isCaps = false;
                 } else {
                     if (strtoupper($string[$i]) === $string[$i]) {

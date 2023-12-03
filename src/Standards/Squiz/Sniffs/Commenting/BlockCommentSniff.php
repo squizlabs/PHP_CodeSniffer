@@ -84,6 +84,7 @@ class BlockCommentSniff implements Sniff
                 T_CLASS     => true,
                 T_INTERFACE => true,
                 T_TRAIT     => true,
+                T_ENUM      => true,
                 T_FUNCTION  => true,
                 T_PUBLIC    => true,
                 T_PRIVATE   => true,

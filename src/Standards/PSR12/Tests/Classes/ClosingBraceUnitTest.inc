@@ -45,3 +45,8 @@ $instance = new class extends \Foo implements \HandleableInterface {
 $app->get('/hello/{name}', function ($name) use ($app) {
     return 'Hello ' . $app->escape($name);
 });
+
+enum Foo4
+{
+
+}//end

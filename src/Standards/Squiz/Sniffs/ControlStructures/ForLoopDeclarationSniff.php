@@ -222,7 +222,7 @@ class ForLoopDeclarationSniff implements Sniff
         $semicolon          = $openingBracket;
         $targetNestinglevel = 0;
         if (isset($tokens[$openingBracket]['conditions']) === true) {
-            $targetNestinglevel += count($tokens[$openingBracket]['conditions']);
+            $targetNestinglevel = count($tokens[$openingBracket]['conditions']);
         }
 
         do {

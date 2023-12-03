@@ -82,6 +82,7 @@ class SideEffectsSniff implements Sniff
             T_CLASS     => T_CLASS,
             T_INTERFACE => T_INTERFACE,
             T_TRAIT     => T_TRAIT,
+            T_ENUM      => T_ENUM,
             T_FUNCTION  => T_FUNCTION,
         ];
 
@@ -168,7 +169,9 @@ class SideEffectsSniff implements Sniff
             }
 
             // Ignore function/class prefixes.
-            if (isset(Tokens::$methodPrefixes[$tokens[$i]['code']]) === true) {
+            if (isset(Tokens::$methodPrefixes[$tokens[$i]['code']]) === true
+                || $tokens[$i]['code'] === T_READONLY
+            ) {
                 continue;
             }
 

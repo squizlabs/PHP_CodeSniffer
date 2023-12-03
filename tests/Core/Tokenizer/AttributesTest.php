@@ -10,7 +10,6 @@
 namespace PHP_CodeSniffer\Tests\Core\Tokenizer;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
-use PHP_CodeSniffer\Util\Tokens;
 
 class AttributesTest extends AbstractMethodUnitTest
 {
@@ -289,7 +288,7 @@ class AttributesTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test that attribute followed by a line comment is parsed correctly.
+     * Test that attributes on function declaration parameters are parsed correctly.
      *
      * @param string $testMarker The comment which prefaces the target token in the test file.
      * @param int    $position   The token position (starting from T_FUNCTION) of T_ATTRIBUTE token.

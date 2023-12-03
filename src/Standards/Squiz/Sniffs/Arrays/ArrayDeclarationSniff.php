@@ -430,9 +430,13 @@ class ArrayDeclarationSniff implements Sniff
                 }
 
                 if ($keyUsed === true && $tokens[$lastToken]['code'] === T_COMMA) {
-                    $error = 'No key specified for array entry; first entry specifies key';
-                    $phpcsFile->addError($error, $nextToken, 'NoKeySpecified');
-                    return;
+                    $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($lastToken + 1), null, true);
+                    // Allow for PHP 7.4+ array unpacking within an array declaration.
+                    if ($tokens[$nextToken]['code'] !== T_ELLIPSIS) {
+                        $error = 'No key specified for array entry; first entry specifies key';
+                        $phpcsFile->addError($error, $nextToken, 'NoKeySpecified');
+                        return;
+                    }
                 }
 
                 if ($keyUsed === false) {
@@ -470,8 +474,17 @@ class ArrayDeclarationSniff implements Sniff
                         true
                     );
 
-                    $indices[]  = ['value' => $valueContent];
-                    $singleUsed = true;
+                    $indices[]          = ['value' => $valueContent];
+                    $usesArrayUnpacking = $phpcsFile->findPrevious(
+                        Tokens::$emptyTokens,
+                        ($nextToken - 2),
+                        null,
+                        true
+                    );
+                    if ($tokens[$usesArrayUnpacking]['code'] !== T_ELLIPSIS) {
+                        // Don't decide if an array is key => value indexed or not when PHP 7.4+ array unpacking is used.
+                        $singleUsed = true;
+                    }
                 }//end if
 
                 $lastToken = $nextToken;

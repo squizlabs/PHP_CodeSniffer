@@ -1,0 +1,59 @@
+name: Remove outdated labels
+
+on:
+  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+  issues:
+    types:
+      - closed
+  pull_request_target:
+    types:
+      - closed
+
+jobs:
+  on-issue-close:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'squizlabs' && github.event.issue.state == 'closed'
+
+    name: Clean up labels on issue close
+
+    steps:
+      - uses: mondeja/remove-labels-gh-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            Status: awaiting feedback
+            Status: close candidate
+            Status: needs investigation
+            Status: triage
+
+  on-pr-merge:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'squizlabs' && github.event.pull_request.merged == true
+
+    name: Clean up labels on PR merge
+
+    steps:
+      - uses: mondeja/remove-labels-gh-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            Status: awaiting feedback
+            Status: close candidate
+            Status: needs investigation
+            Status: triage
+
+  on-pr-close:
+    runs-on: ubuntu-latest
+    if: github.repository_owner == 'squizlabs' && github.event_name == 'pull_request_target' && github.event.pull_request.merged == false
+
+    name: Clean up labels on PR close
+
+    steps:
+      - uses: mondeja/remove-labels-gh-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labels: |
+            Status: awaiting feedback
+            Status: close candidate
+            Status: needs investigation
+            Status: triage

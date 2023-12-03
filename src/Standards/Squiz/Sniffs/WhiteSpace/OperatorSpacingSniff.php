@@ -77,12 +77,13 @@ class OperatorSpacingSniff implements Sniff
 
         // Returning/printing a negative value; eg. (return -1).
         $this->nonOperandTokens += [
-            T_RETURN   => T_RETURN,
-            T_ECHO     => T_ECHO,
-            T_EXIT     => T_EXIT,
-            T_PRINT    => T_PRINT,
-            T_YIELD    => T_YIELD,
-            T_FN_ARROW => T_FN_ARROW,
+            T_RETURN      => T_RETURN,
+            T_ECHO        => T_ECHO,
+            T_EXIT        => T_EXIT,
+            T_PRINT       => T_PRINT,
+            T_YIELD       => T_YIELD,
+            T_FN_ARROW    => T_FN_ARROW,
+            T_MATCH_ARROW => T_MATCH_ARROW,
         ];
 
         // Trying to use a negative value; eg. myFunction($var, -2).

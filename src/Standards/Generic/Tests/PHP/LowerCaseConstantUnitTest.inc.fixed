@@ -81,3 +81,20 @@ var_dump(MyClass::TRUE);
 function tRUE() {}
 
 $input->getFilterChain()->attachByName('Null', ['type' => Null::TYPE_STRING]);
+
+// Issue #3332 - ignore type declarations, but not default values.
+class TypedThings {
+	const MYCONST = false;
+
+	public int|FALSE $int = false;
+	public Type|NULL $int = new MyObj(null);
+
+	private function typed(int|FALSE $param = null, Type|NULL $obj = new MyObj(false)) : string|FALSE|NULL
+	{
+		if (true === false) {
+			return null;
+        }
+    }
+}
+
+$cl = function (int|FALSE $param = null, Type|NULL $obj = new MyObj(false)) : string|FALSE|NULL {};

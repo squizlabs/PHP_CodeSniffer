@@ -89,3 +89,7 @@ class Test_Class_Bad_G
     /*some comment*/ {
 
 }
+
+enum Test_Enum {
+
+}

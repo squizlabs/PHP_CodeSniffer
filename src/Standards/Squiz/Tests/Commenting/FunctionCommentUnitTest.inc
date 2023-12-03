@@ -1046,3 +1046,91 @@ public function ignored() {
  * @return void
  * @throws Exception If any other error occurs. */
 function throwCommentOneLine() {}
+
+/**
+ * When two adjacent pipe symbols are used (by mistake), the sniff should not throw a PHP Fatal error
+ *
+ * @param stdClass||null $object While invalid, this should not throw a PHP Fatal error.
+ * @return void
+ */
+function doublePipeFatalError(?stdClass $object) {}
+
+/**
+ * Test for passing variables by reference
+ *
+ * This sniff treats the '&' as optional for parameters passed by reference, but
+ * forbidden for parameters which are not passed by reference.
+ *
+ * Because mismatches may be in either direction, we cannot auto-fix these.
+ *
+ * @param string $foo    A string passed in by reference.
+ * @param string &$bar   A string passed in by reference.
+ * @param string $baz    A string NOT passed in by reference.
+ * @param string &$qux   A string NOT passed in by reference.
+ * @param string &$case1 A string passed in by reference with a case mismatch.
+ * @param string &$CASE2 A string NOT passed in by reference, also with a case mismatch.
+ *
+ * @return void
+ */
+public function variablesPassedByReference(&$foo, &$bar, $baz, $qux, &$CASE1, $case2)
+{
+    return;
+}
+
+/**
+ * Test for param tag containing ref, but param in declaration not being by ref.
+ *
+ * @param string &$foo This should be flagged as (only) ParamNameUnexpectedAmpersandPrefix.
+ * @param string &$bar This should be flagged as (only) ParamNameNoMatch.
+ * @param string &$baz This should be flagged as (only) ParamNameNoCaseMatch.
+ *
+ * @return void
+ */
+function passedByRefMismatch($foo, $bra, $BAZ) {
+	return;
+}
+
+/**
+ * Test variable case
+ *
+ * @param string $foo         This parameter is lowercase.
+ * @param string $BAR         This parameter is UPPERCASE.
+ * @param string $BazQux      This parameter is TitleCase.
+ * @param string $corgeGrault This parameter is camelCase.
+ * @param string $GARPLY      This parameter should be in lowercase.
+ * @param string $waldo       This parameter should be in TitleCase.
+ * @param string $freD        This parameter should be in UPPERCASE.
+ * @param string $PLUGH       This parameter should be in TitleCase.
+ *
+ * @return void
+ */
+public function variableCaseTest(
+    $foo,
+    $BAR,
+    $BazQux,
+    $corgeGrault,
+    $garply,
+    $Waldo,
+    $FRED,
+    $PluGh
+) {
+    return;
+}
+
+/**
+ * Test variable order mismatch
+ *
+ * @param string $foo This is the third parameter.
+ * @param string $bar This is the first parameter.
+ * @param string $baz This is the second parameter.
+ *
+ * @return void
+ */
+public function variableOrderMismatch($bar, $baz, $foo) {
+    return;
+}
+
+/**
+ * @return never
+ */
+function foo() {}

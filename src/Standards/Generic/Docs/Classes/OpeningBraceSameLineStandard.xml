@@ -18,6 +18,14 @@ class Foo
 }
         ]]>
         </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Opening brace is the last thing on the line.">
+        <![CDATA[
+class Foo <em>{</em>
+}
+        ]]>
+        </code>
         <code title="Invalid: Opening brace not last thing on the line.">
         <![CDATA[
 class Foo {<em> // Start of class.</em>

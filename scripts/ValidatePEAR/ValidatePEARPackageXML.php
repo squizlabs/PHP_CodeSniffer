@@ -232,10 +232,11 @@ class ValidatePEARPackageXML
                     $valid = false;
                 } else {
                     // Limited validation of the "role" tags.
-                    if (strpos($name, 'Test.') !== false && $role !== 'test') {
+                    if ((strpos($name, 'tests/') === 0 || strpos($name, 'Test.') !== false) && $role !== 'test') {
                         echo "- Test files should have the role 'test'. Found: '$role' for file '{$name}'.".PHP_EOL;
                         $valid = false;
-                    } else if ((strpos($name, 'Standard.xml') !== false || strpos($name, 'Sniff.php') !== false)
+                    } else if (strpos($name, 'tests/') !== 0
+                        && (strpos($name, 'Standard.xml') !== false || strpos($name, 'Sniff.php') !== false)
                         && $role !== 'php'
                     ) {
                         echo "- Sniff files, including sniff documentation files should have the role 'php'. Found: '$role' for file '{$name}'.".PHP_EOL;
