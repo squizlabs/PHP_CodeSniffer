@@ -17,7 +17,7 @@ If you're using PHP_CodeSniffer as part of a team, or you're running it on a [CI
 ## Installation
 
 The easiest way to get started with PHP_CodeSniffer is to download the Phar files for each of the commands:
-```
+```bash
 # Download using curl
 curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
 curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
