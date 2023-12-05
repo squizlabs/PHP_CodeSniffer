@@ -30,6 +30,13 @@ use PHP_CodeSniffer\Util\Tokens;
 class EmptyStatementSniff implements Sniff
 {
 
+    /**
+     * Empty statements which should not be reported when there is a comment in the body.
+     *
+     * @var string[]
+     */
+    public $allowComment = [];
+
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -75,10 +82,16 @@ class EmptyStatementSniff implements Sniff
             return;
         }
 
+        if (in_array(strtolower($token['content']), $this->allowComment, true) === true) {
+            $skipTokens = T_WHITESPACE;
+        } else {
+            $skipTokens = Tokens::$emptyTokens;
+        }
+
         $next = $phpcsFile->findNext(
-            Tokens::$emptyTokens,
+            $skipTokens,
             ($token['scope_opener'] + 1),
-            ($token['scope_closer'] - 1),
+            $token['scope_closer'],
             true
         );
 

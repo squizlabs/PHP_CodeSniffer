@@ -72,3 +72,21 @@ try {
 if (true) {} elseif (false) {}
 
 match($foo) {};
+
+// phpcs:set Generic.CodeAnalysis.EmptyStatement allowComment[] elseif,catch
+
+if ($foo) {
+    // Should complain here
+} elseif ($bar) {
+    // Should not complain here
+} else {
+    // Should complain here
+}
+
+TRY {
+    // Should complain here
+} CATCH (Exception $exception) {
+    // Should not complain here
+}
+
+// phpcs:set Generic.CodeAnalysis.EmptyStatement allowComment[]
