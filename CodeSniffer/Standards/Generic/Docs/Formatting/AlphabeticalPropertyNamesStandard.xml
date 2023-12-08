@@ -1,0 +1,31 @@
+<documentation title="Alphabetical Property Names">
+    <standard>
+    <![CDATA[
+    Property names must be declared in alphabetical order.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Properties are declared in alphabetical order.">
+        <![CDATA[
+class Foo
+{
+    protected $_a = null;
+    protected $a = null;
+    protected $b = null;
+    protected $c = null;
+}
+        ]]>
+        </code>
+        <code title="Invalid: Properties are not declared in alphabetical order.">
+        <![CDATA[
+class Foo
+{
+    protected $c = null;
+    protected $a = null;
+    protected $_a = null;
+    protected $b = null;
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
