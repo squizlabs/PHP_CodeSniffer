@@ -134,8 +134,11 @@ class Runner
             return $e->getCode();
         }//end try
 
-        if ($numErrors === 0) {
-            // No errors found.
+        echo "Total violations found: $numErrors".PHP_EOL.PHP_EOL;
+
+        if ($numErrors <= $this->config->maxWarnings) {
+            // Number of warnings or errors found is below or equal to the maxWarnings threshold
+            // (which is zero by default).
             return 0;
         } else if ($this->reporter->totalFixable === 0) {
             // Errors found, but none of them can be fixed by PHPCBF.
