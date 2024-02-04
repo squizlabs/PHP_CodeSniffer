@@ -137,8 +137,9 @@ class ScopeClosingBraceSniff implements Sniff
         }
 
         $fix = false;
-        if ($tokens[$stackPtr]['code'] === T_CASE
-            || $tokens[$stackPtr]['code'] === T_DEFAULT
+        if (($tokens[$stackPtr]['code'] === T_CASE
+            || $tokens[$stackPtr]['code'] === T_DEFAULT)
+            && $tokens[$scopeEnd]['code'] !== T_CLOSE_CURLY_BRACKET
         ) {
             // BREAK statements should be indented n spaces from the
             // CASE or DEFAULT statement.
