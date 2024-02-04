@@ -64,15 +64,15 @@
  * Short description.
  *
  *
- * @param
+ * @param one
  *
- * @param
+ * @param two
  *
  *
  * @tag one
  */
 
- /**
+/**
  * Short description.
  *
  * @param
@@ -95,7 +95,7 @@
  * @g3  two
  */
 
- /**
+/**
  * Short description
  * over multiple lines.
  *
@@ -117,7 +117,7 @@
  *             multiple lines
  */
 
- /**
+/**
  * Returns true if the specified string is in the camel caps format.
  *
  * @param boolean $classFormat If true, check to see if the string is in the
@@ -132,7 +132,7 @@
  * @return boolean
  */
 
- /**
+/**
  * Verifies that a @throws tag exists for a function that throws exceptions.
  * Verifies the number of @throws tags and the number of throw tokens matches.
  * Verifies the exception type.
@@ -148,7 +148,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
- /**
+/**
  * Comment
  *
  * @one
@@ -163,7 +163,28 @@
  * @three bar
  */
 
- /**
+/**
+ * @one
+ * @two
+ * @three
+ * @four
+ * @one
+ * @two
+ * @three
+ * @four
+ */
+
+/**
+ * @one this has more than one line (1)
+ *      and should remain with the first tag (1)
+ * @two a different tag which should be (2)
+ *      moved to after the third tag (2)
+ * @one the same tag as the first but listed (3)
+ *      after a different tag; this should be (3)
+ *      moved above the second tag (3)
+ */
+
+/**
  * @ var Comment
  */
 
@@ -247,4 +268,8 @@
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license	  	https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link		http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+/**
+ *
  */
