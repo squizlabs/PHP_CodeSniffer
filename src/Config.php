@@ -855,6 +855,7 @@ class Config
                 foreach ($sniffs as $sniff) {
                     if (substr_count($sniff, '.') !== 2) {
                         $error  = 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
+                        $error .= 'Perhaps try following sniff code: '.$this->getSuggestedSniffCode($sniff).PHP_EOL.PHP_EOL;
                         $error .= $this->printShortUsage(true);
                         throw new DeepExitException($error, 3);
                     }
@@ -871,6 +872,7 @@ class Config
                 foreach ($sniffs as $sniff) {
                     if (substr_count($sniff, '.') !== 2) {
                         $error  = 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
+                        $error .= 'Perhaps try following sniff code: '.$this->getSuggestedSniffCode($sniff).PHP_EOL.PHP_EOL;
                         $error .= $this->printShortUsage(true);
                         throw new DeepExitException($error, 3);
                     }
@@ -1349,6 +1351,23 @@ class Config
         echo $usage;
 
     }//end printShortUsage()
+
+
+    /**
+     * Suggest a sniff code by only combining first three elements.
+     *
+     * @param string $sniff Sniff code
+     *
+     * @return string
+     */
+    public function getSuggestedSniffCode($sniff)
+    {
+        $elements = explode('.', $sniff);
+        $elements = array_slice($elements, 0, 3);
+
+        return implode('.', $elements);
+
+    }//end getSuggestedSniffCode()
 
 
     /**
