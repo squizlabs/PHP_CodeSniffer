@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<phpcs-baseline>
+    <skip/>
+    <violation file="src/foo/bar" sniff="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen" signature="foobar"/>
+</phpcs-baseline>

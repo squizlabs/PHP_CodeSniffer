@@ -12,6 +12,7 @@
 
 namespace PHP_CodeSniffer;
 
+use PHP_CodeSniffer\Baseline\BaselineSetFactory;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Util\Common;
@@ -45,6 +46,7 @@ use PHP_CodeSniffer\Util\Common;
  *                                     If empty, all sniffs in the supplied standards will be used.
  * @property string[] $ignored         Regular expressions used to ignore files and folders during checking.
  * @property string   $reportFile      A file where the report output should be written.
+ * @property string   $baselineFile    The baselined violations file to include.
  * @property string   $generator       The documentation generator to use.
  * @property string   $filter          The filter to use for the run.
  * @property string[] $bootstrap       One of more files to include before the run begins.
@@ -130,6 +132,7 @@ class Config
         'exclude'         => null,
         'ignored'         => null,
         'reportFile'      => null,
+        'baselineFile'    => null,
         'generator'       => null,
         'filter'          => null,
         'bootstrap'       => null,
@@ -145,6 +148,13 @@ class Config
         'stdinPath'       => null,
         'unknown'         => null,
     ];
+
+    /**
+     * The configured baselined violations
+     *
+     * @var \PHP_CodeSniffer\Baseline\BaselineSet|null
+     */
+    public $baseline = null;
 
     /**
      * Whether or not to kill the process when an unknown command line arg is found.
@@ -381,6 +391,11 @@ class Config
             } while ($currentDir !== '.' && $currentDir !== $lastDir && Common::isReadable($currentDir) === true);
         }//end if
 
+        // Load baseline file, only if no baseline should be created.
+        if (isset($this->settings['reports']['baseline']) === false) {
+            $this->baseline = BaselineSetFactory::fromFile($this->baselineFile);
+        }
+
         if (defined('STDIN') === false
             || stripos(PHP_OS, 'WIN') === 0
         ) {
@@ -504,6 +519,7 @@ class Config
         $this->exclude         = [];
         $this->ignored         = [];
         $this->reportFile      = null;
+        $this->baselineFile    = 'phpcs.baseline.xml';
         $this->generator       = null;
         $this->filter          = null;
         $this->bootstrap       = [];
@@ -1038,6 +1054,18 @@ class Config
                     $error .= $this->printShortUsage(true);
                     throw new DeepExitException($error, 3);
                 }
+            } else if (substr($arg, 0, 13) === 'baselineFile=') {
+                if (substr($arg, 13) === '') {
+                    $this->basepath = null;
+                    break;
+                }
+
+                $this->baselineFile = Util\Common::realpath(substr($arg, 13));
+                if (is_file($this->baselineFile) === false) {
+                    $error  = 'ERROR: The specified baselineFile "'.substr($arg, 13).'" points to a non-existent file'.PHP_EOL.PHP_EOL;
+                    $error .= $this->printShortUsage(true);
+                    throw new DeepExitException($error, 3);
+                }
             } else if ((substr($arg, 0, 7) === 'report=' || substr($arg, 0, 7) === 'report-')) {
                 $reports = [];
 
@@ -1361,9 +1389,10 @@ class Config
         echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
         echo '  [--cache[=<cacheFile>]] [--no-cache] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '  [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>]'.PHP_EOL;
-        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--bootstrap=<bootstrap>]'.PHP_EOL;
-        echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
-        echo '  [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
+        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--baselineFile=<baselineFile>]'.PHP_EOL;
+        echo '  [--bootstrap=<bootstrap>] [--severity=<severity>] [--error-severity=<severity>]'.PHP_EOL;
+        echo '  [--warning-severity=<severity>] [--runtime-set key value]'.PHP_EOL;
+        echo '  [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>]'.PHP_EOL;
         echo '  [--encoding=<encoding>] [--parallel=<processes>] [--generator=<generator>]'.PHP_EOL;
         echo '  [--extensions=<extensions>] [--ignore=<patterns>] [--ignore-annotations]'.PHP_EOL;
@@ -1396,6 +1425,7 @@ class Config
         echo PHP_EOL;
         echo ' <cacheFile>    Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo ' <basepath>     A path to strip from the front of file paths inside reports'.PHP_EOL;
+        echo ' <baselineFile> The path to the file with the baselined violations'.PHP_EOL;
         echo ' <bootstrap>    A comma separated list of files to run before processing begins'.PHP_EOL;
         echo ' <encoding>     The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo ' <extensions>   A comma separated list of file extensions to check'.PHP_EOL;
