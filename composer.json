@@ -29,7 +29,8 @@
         "php": ">=5.4.0",
         "ext-tokenizer": "*",
         "ext-xmlwriter": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "composer/xdebug-handler": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"

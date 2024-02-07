@@ -12,6 +12,7 @@
 
 namespace PHP_CodeSniffer;
 
+use Composer\XdebugHandler\XdebugHandler;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\DummyFile;
@@ -53,6 +54,10 @@ class Runner
      */
     public function runPHPCS()
     {
+        $xdebug = new XdebugHandler('phpcs');
+        $xdebug->check();
+        unset($xdebug);
+
         $this->registerOutOfMemoryShutdownMessage('phpcs');
 
         try {
@@ -155,6 +160,10 @@ class Runner
      */
     public function runPHPCBF()
     {
+        $xdebug = new XdebugHandler('phpcbf');
+        $xdebug->check();
+        unset($xdebug);
+
         $this->registerOutOfMemoryShutdownMessage('phpcbf');
 
         if (defined('PHP_CODESNIFFER_CBF') === false) {
