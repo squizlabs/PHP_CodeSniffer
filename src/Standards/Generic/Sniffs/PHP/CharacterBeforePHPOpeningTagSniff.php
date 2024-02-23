@@ -36,7 +36,10 @@ class CharacterBeforePHPOpeningTagSniff implements Sniff
      */
     public function register()
     {
-        return [T_OPEN_TAG];
+        return [
+            T_OPEN_TAG,
+            T_OPEN_TAG_WITH_ECHO,
+        ];
 
     }//end register()
 
@@ -52,10 +55,15 @@ class CharacterBeforePHPOpeningTagSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $tokens = $phpcsFile->getTokens();
+        if ($tokens[$stackPtr]['code'] === T_OPEN_TAG_WITH_ECHO) {
+            // Mixed PHP/HTML file, ignore.
+            return $phpcsFile->numTokens;
+        }
+
         $expected = 0;
         if ($stackPtr > 0) {
             // Allow a byte-order mark.
-            $tokens = $phpcsFile->getTokens();
             foreach ($this->bomDefinitions as $bomName => $expectedBomHex) {
                 $bomByteLength = (strlen($expectedBomHex) / 2);
                 $htmlBomHex    = bin2hex(substr($tokens[0]['content'], 0, $bomByteLength));
