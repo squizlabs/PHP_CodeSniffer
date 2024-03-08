@@ -7,7 +7,7 @@
     <code_comparison>
         <code title="Valid: Parenthesis used.">
         <![CDATA[
-new Foo();
+new Foo<em>()</em>;
         ]]>
         </code>
         <code title="Invalid: Parenthesis not used.">

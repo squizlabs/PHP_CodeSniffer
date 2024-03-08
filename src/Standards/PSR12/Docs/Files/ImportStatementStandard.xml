@@ -1,0 +1,19 @@
+<documentation title="Import Statement">
+    <standard>
+        <![CDATA[
+    Import statements MUST never begin with a leading backslash as they must always be fully qualified.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: No leading backslash.">
+            <![CDATA[
+use Vendor\Package\ClassA;
+        ]]>
+        </code>
+        <code title="Invalid: Leading backslash.">
+            <![CDATA[
+use <em>\</em>Vendor\Package\ClassA;
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

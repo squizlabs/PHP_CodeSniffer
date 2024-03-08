@@ -1,0 +1,21 @@
+<documentation title="Open Tag">
+    <standard>
+        <![CDATA[
+    If the open tag is on the first line of the file it must be on a line by itself.
+    Only applies to files without inline HTML.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: New line after opening tag.">
+            <![CDATA[
+<?php
+// code
+        ]]>
+        </code>
+        <code title="Invalid: No new line after opening tag.">
+            <![CDATA[
+<?php<em> </em>declare(strict_types=1)
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
