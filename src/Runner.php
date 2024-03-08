@@ -23,6 +23,9 @@ use PHP_CodeSniffer\Util\Standards;
 
 class Runner
 {
+    const SUCCESS = 0;
+    const FAILURE = 1;
+    const INVALID = 2;
 
     /**
      * The config data for the run.
@@ -81,7 +84,7 @@ class Runner
                     $ruleset->explain();
                 }
 
-                return 0;
+                return self::SUCCESS;
             }
 
             // Generate documentation for each of the supplied standards.
@@ -95,7 +98,7 @@ class Runner
                     $generator->generate();
                 }
 
-                return 0;
+                return self::SUCCESS;
             }
 
             // Other report formats don't really make sense in interactive mode
@@ -136,13 +139,13 @@ class Runner
 
         if ($numErrors === 0) {
             // No errors found.
-            return 0;
+            return self::SUCCESS;
         } else if ($this->reporter->totalFixable === 0) {
             // Errors found, but none of them can be fixed by PHPCBF.
-            return 1;
+            return self::FAILURE;
         } else {
             // Errors found, and some can be fixed by PHPCBF.
-            return 2;
+            return self::INVALID;
         }
 
     }//end runPHPCS()
@@ -215,20 +218,20 @@ class Runner
             // Nothing was fixed by PHPCBF.
             if ($this->reporter->totalFixable === 0) {
                 // Nothing found that could be fixed.
-                return 0;
+                return self::SUCCESS;
             } else {
                 // Something failed to fix.
-                return 2;
+                return self::INVALID;
             }
         }
 
         if ($this->reporter->totalFixable === 0) {
             // PHPCBF fixed all fixable errors.
-            return 1;
+            return self::FAILURE;
         }
 
         // PHPCBF fixed some fixable errors, but others failed to fix.
-        return 2;
+        return self::INVALID;
 
     }//end runPHPCBF()
 
