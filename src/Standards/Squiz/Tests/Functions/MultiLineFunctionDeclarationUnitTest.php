@@ -70,6 +70,12 @@ class MultiLineFunctionDeclarationUnitTest extends AbstractSniffUnitTest
                 252 => 1,
                 253 => 1,
                 254 => 1,
+                316 => 1,
+                319 => 1,
+                320 => 1,
+                323 => 1,
+                324 => 1,
+                325 => 2,
             ];
         } else {
             $errors = [
