@@ -52,6 +52,7 @@ use PHP_CodeSniffer\Util\Standards;
  * @property string     $generator       The documentation generator to use.
  * @property string     $filter          The filter to use for the run.
  * @property string[]   $bootstrap       One of more files to include before the run begins.
+ * @property string     $localFile       Custom LocalFile object to use in FileList.
  * @property int|string $reportWidth     The maximum number of columns that reports should use for output.
  *                                       Set to "auto" for have this value changed to the width of the terminal.
  * @property int        $errorSeverity   The minimum severity an error must have to be displayed.
@@ -138,6 +139,7 @@ class Config
         'generator'       => null,
         'filter'          => null,
         'bootstrap'       => null,
+        'localFile'       => null,
         'reports'         => null,
         'basepath'        => null,
         'reportWidth'     => null,
@@ -540,6 +542,7 @@ class Config
         $this->generator       = null;
         $this->filter          = null;
         $this->bootstrap       = [];
+        $this->localFile       = null;
         $this->basepath        = null;
         $this->reports         = ['full' => null];
         $this->reportWidth     = 'auto';

@@ -17,6 +17,7 @@ use Iterator;
 use PHP_CodeSniffer\Autoload;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Util\Common;
 use RecursiveArrayIterator;
@@ -194,7 +195,16 @@ class FileList implements Iterator, Countable
     {
         $path = key($this->files);
         if (isset($this->files[$path]) === false) {
-            $this->files[$path] = new LocalFile($path, $this->ruleset, $this->config);
+            if ($this->config->localFile === null) {
+                $this->files[$path] = new LocalFile($path, $this->ruleset, $this->config);
+            } else {
+                $localFileClass = $this->config->localFile;
+                if (is_a($localFileClass, '\PHP_CodeSniffer\Files\LocalFile', true) === false) {
+                    throw new RuntimeException('Custom LocalFile class '.$localFileClass.' is not a subtype of PHP_CodeSniffer\Files\LocalFile.');
+                }
+
+                $this->files[$path] = new $localFileClass($path, $this->ruleset, $this->config);
+            }
         }
 
         return $this->files[$path];
