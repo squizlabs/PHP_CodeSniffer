@@ -127,6 +127,11 @@ class FunctionDeclarationSniff implements Sniff
             // Must be no space before semicolon in abstract/interface methods.
             if ($phpcsFile->getMethodProperties($stackPtr)['has_body'] === false) {
                 $end = $phpcsFile->findNext(T_SEMICOLON, $closeBracket);
+                if ($end === false) {
+                    // Malformed function declaration without semicolon - skip this check.
+                    return;
+                }
+
                 if ($tokens[($end - 1)]['content'] === $phpcsFile->eolChar) {
                     $spaces = 'newline';
                 } else if ($tokens[($end - 1)]['code'] === T_WHITESPACE) {
