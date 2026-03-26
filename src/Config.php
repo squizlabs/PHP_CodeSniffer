@@ -251,15 +251,12 @@ class Config
 
             // Check if the standard name is valid, or if the case is invalid.
             $installedStandards = Util\Standards::getInstalledStandards();
+            $installedStandardsByLowerName = [];
+            foreach ($installedStandards as $validStandard) {
+                $installedStandardsByLowerName[strtolower($validStandard)] = $validStandard;
+            }
             foreach ($value as $standard) {
-                foreach ($installedStandards as $validStandard) {
-                    if (strtolower($standard) === strtolower($validStandard)) {
-                        $standard = $validStandard;
-                        break;
-                    }
-                }
-
-                $cleaned[] = $standard;
+                $cleaned[] = $installedStandardsByLowerName[strtolower($standard)]
             }
 
             $value = $cleaned;
